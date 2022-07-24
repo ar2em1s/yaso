@@ -1,0 +1,13 @@
+require:
+  - rubocop-rspec
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 3.1.2
+  NewCops: enable
+
+Layout/LineLength:
+  Max: 120
+
+Style/Documentation:
+  Enabled: false
