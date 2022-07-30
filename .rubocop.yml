@@ -3,11 +3,27 @@ require:
   - rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 3.1.2
+  TargetRubyVersion: 2.5
+  SuggestExtensions: false
   NewCops: enable
+  Exclude:
+    - vendor/bundle/**/*
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
 
 Layout/LineLength:
   Max: 120
 
 Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - '*.gemspec'
+  IgnoredMethods:
+    - describe
+    - context
+
+RSpec/LetSetup:
   Enabled: false

@@ -1,4 +1,5 @@
 # Yaso
+[![Ruby](https://github.com/Ar2emis/yaso/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Ar2emis/yaso/actions/workflows/main.yml) ![gem](https://img.shields.io/gem/v/yaso) [![GitHub license](https://img.shields.io/github/license/Ar2emis/yaso)](https://github.com/Ar2emis/yaso/blob/master/LICENSE.txt)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/yaso`. To experiment with that code, run `bin/console` for an interactive prompt.
 
