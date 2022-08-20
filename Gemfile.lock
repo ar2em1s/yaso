@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yaso (1.0.0pre)
+    yaso (1.0.0)
 
 GEM
   remote: https://rubygems.org/

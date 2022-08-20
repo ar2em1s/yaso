@@ -1,9 +1,10 @@
 # Yaso
 [![Ruby](https://github.com/Ar2emis/yaso/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Ar2emis/yaso/actions/workflows/main.yml) ![gem](https://img.shields.io/gem/v/yaso) [![GitHub license](https://img.shields.io/github/license/Ar2emis/yaso)](https://github.com/Ar2emis/yaso/blob/master/LICENSE.txt)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/yaso`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+That's my (Yet Another) ServiceObject pattern implementation. I tried to make it fast (the fastest actually) and simple to use.
+I was inspired by those alternatives and I hope this will encourage them to be even better:
+- [Trailblazer](https://github.com/trailblazer/trailblazer)
+- [Decouplio](https://github.com/differencialx/decouplio)
 
 ## Installation
 
@@ -23,17 +24,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+All the information you can find in the gem [wiki](https://github.com/Ar2emis/yaso/wiki).
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+I don't think that someone would like to help me developing the gem but if so just fork a new branch from the master, do your dark business, open a pull request and assign me as a reviewer. 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/yaso.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Ar2emis/yaso.
 
 ## License
 
