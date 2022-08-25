@@ -6,10 +6,7 @@ module Yaso
 
     def self.call(context = {})
       context = context.is_a?(Context) ? context : Context.new(context)
-      unless @entry
-        @entry = Logic::Classic.call(self, steps)
-        clear_steps!
-      end
+      @entry ||= Logic::Classic.call(self, steps)
       step = @entry
       instance = new
       step = step.call(context, instance) while step
