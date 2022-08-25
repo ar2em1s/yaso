@@ -3,6 +3,7 @@
 module Yaso
   class Context
     attr_writer :success
+    attr_reader :data
 
     def initialize(kwargs)
       @success = true
@@ -19,10 +20,6 @@ module Yaso
 
     def to_h
       @data.dup
-    end
-
-    def to_h!
-      @data
     end
 
     def success?

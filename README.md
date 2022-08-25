@@ -1,7 +1,7 @@
 # Yaso
 [![Ruby](https://github.com/Ar2emis/yaso/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Ar2emis/yaso/actions/workflows/main.yml) ![gem](https://img.shields.io/gem/v/yaso) [![GitHub license](https://img.shields.io/github/license/Ar2emis/yaso)](https://github.com/Ar2emis/yaso/blob/master/LICENSE.txt)
 
-That's my (Yet Another) ServiceObject pattern implementation. I tried to make it fast (the fastest actually) and simple to use.
+That's my (Yet Another) ServiceObject pattern implementation. I made it fast ([the fastest actually](https://github.com/Ar2emis/yaso/wiki/Benchmarks)) and simple to use.
 I was inspired by those alternatives and I hope this will encourage them to be even better:
 - [Trailblazer](https://github.com/trailblazer/trailblazer)
 - [Decouplio](https://github.com/differencialx/decouplio)

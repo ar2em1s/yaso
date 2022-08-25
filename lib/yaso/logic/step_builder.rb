@@ -37,11 +37,10 @@ module Yaso
       end
 
       def build_method(name, &block)
-        return name if @klass.method_defined?(name) || @klass.private_method_defined?(name)
+        return name if @klass.method_defined?(name)
         raise StepIsNotImplementedError.new(@klass, name) unless block
 
         @klass.define_method(name, &block)
-        @klass.instance_eval { private name }
       end
 
       def build_wrapper(&block)
@@ -53,10 +52,7 @@ module Yaso
 
       def build_wrapper_call(wrapper_class, service_class)
         wrapper_class.define_singleton_method(:call) do |context, instance|
-          unless @entry
-            @entry = Logic::Classic.call(service_class, steps)
-            clear_steps!
-          end
+          @entry ||= Logic::Classic.call(service_class, steps)
           step = @entry
           step = step.call(context, instance) while step
           context

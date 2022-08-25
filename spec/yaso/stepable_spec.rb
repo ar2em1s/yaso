@@ -179,15 +179,4 @@ RSpec.describe Yaso::Stepable do
       end
     end
   end
-
-  describe '.clear_steps!' do
-    before do
-      klass.steps << :step
-      klass.clear_steps!
-    end
-
-    it 'clears steps' do
-      expect(klass.steps).to be_empty
-    end
-  end
 end

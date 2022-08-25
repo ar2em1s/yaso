@@ -32,12 +32,6 @@ RSpec.describe Yaso::Context do
     end
   end
 
-  describe '#to_h!' do
-    it 'returns the data' do
-      expect(context.to_h!).to be_a(Hash)
-    end
-  end
-
   describe '#success?' do
     context 'when context is success' do
       it 'returns true' do

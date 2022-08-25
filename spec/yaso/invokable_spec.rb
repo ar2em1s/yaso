@@ -14,7 +14,7 @@ RSpec.describe Yaso::Invokable do
 
     context 'when Yaso::Invokable::METHOD' do
       before do
-        allow(context).to receive(:to_h!).and_return({})
+        allow(context).to receive(:data).and_return({})
         allow(instance).to receive(:foo)
         result
       end
@@ -24,7 +24,7 @@ RSpec.describe Yaso::Invokable do
       end
 
       it 'calls Yaso::Context#to_h!' do
-        expect(context).to have_received(:to_h!)
+        expect(context).to have_received(:data)
       end
     end
 

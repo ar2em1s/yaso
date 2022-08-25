@@ -5,8 +5,6 @@ RSpec.describe 'Switch', type: :integration do
     create_service do
       switch :one, key: :value, cases: { true => :two, false => :three }
 
-      private
-
       def two(ctx, **)
         ctx[:two] = true
       end
@@ -54,8 +52,6 @@ RSpec.describe 'Switch', type: :integration do
         switch :one, key: :value, cases: { true => :two, false => :three }
         step :four
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -84,8 +80,6 @@ RSpec.describe 'Switch', type: :integration do
       create_service do
         switch :one, key: :value, cases: { true => :two, false => :three }
         step :four
-
-        private
 
         def two(ctx, **)
           ctx[:two] = true
@@ -118,8 +112,6 @@ RSpec.describe 'Switch', type: :integration do
         switch :one, fast: true, key: :value, cases: { true => :two, false => :three }
         step :four
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -149,8 +141,6 @@ RSpec.describe 'Switch', type: :integration do
         switch :one, fast: :success, key: :value, cases: { true => :two, false => :three }
         step :four
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -179,8 +169,6 @@ RSpec.describe 'Switch', type: :integration do
       create_service do
         switch :one, key: :value, cases: { true => :two, false => :three }
         failure :four
-
-        private
 
         def two(ctx, **)
           ctx[:two] = true
@@ -213,8 +201,6 @@ RSpec.describe 'Switch', type: :integration do
         switch :one, fast: true, key: :value, cases: { true => :two, false => :three }
         failure :four
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -245,8 +231,6 @@ RSpec.describe 'Switch', type: :integration do
       create_service do
         switch :one, fast: :failure, key: :value, cases: { true => :two, false => :three }
         failure :four
-
-        private
 
         def two(ctx, **)
           ctx[:two] = true
@@ -279,8 +263,6 @@ RSpec.describe 'Switch', type: :integration do
         switch :one, key: :value, cases: { true => :two, false => :three }
         failure :four
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -310,8 +292,6 @@ RSpec.describe 'Switch', type: :integration do
         switch :one, key: :value, cases: { true => :two, false => :three }
         step :four
         failure :five
-
-        private
 
         def two(ctx, **)
           ctx[:two] = true
@@ -346,8 +326,6 @@ RSpec.describe 'Switch', type: :integration do
         switch :one, key: :value, cases: { true => :two, false => :three }
         step :four
         failure :five
-
-        private
 
         def two(ctx, **)
           ctx[:two] = true
@@ -389,8 +367,6 @@ RSpec.describe 'Switch', type: :integration do
         step :four
         step :five
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -429,8 +405,6 @@ RSpec.describe 'Switch', type: :integration do
         step :four
         failure :five
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -467,8 +441,6 @@ RSpec.describe 'Switch', type: :integration do
       create_service do
         switch :one, on_success: :four, key: :value, cases: { true => :two, false => :three }
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -490,8 +462,6 @@ RSpec.describe 'Switch', type: :integration do
         switch :one, on_failure: :five, key: :value, cases: { true => :two, false => :three }
         step :four
         failure :five
-
-        private
 
         def two(ctx, **)
           ctx[:two] = true
@@ -533,8 +503,6 @@ RSpec.describe 'Switch', type: :integration do
         step :four
         step :five
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -573,8 +541,6 @@ RSpec.describe 'Switch', type: :integration do
       create_service do
         switch :one, on_failure: :four, key: :value, cases: { true => :two, false => :three }
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -594,8 +560,6 @@ RSpec.describe 'Switch', type: :integration do
     subject(:klass) do
       create_service do
         switch :one, key: :value, cases: { true => :two }
-
-        private
 
         def two(ctx, **)
           ctx[:two] = true
@@ -625,8 +589,6 @@ RSpec.describe 'Switch', type: :integration do
       create_service do
         switch(:one) { |_, value:, **| { true => :two }[value] }
 
-        private
-
         def two(ctx, **)
           ctx[:two] = true
         end
@@ -654,8 +616,6 @@ RSpec.describe 'Switch', type: :integration do
     subject(:klass) do
       create_service do
         switch CallableClass
-
-        private
 
         def two(ctx, **)
           ctx[:two] = true
@@ -695,8 +655,6 @@ RSpec.describe 'Switch', type: :integration do
         step :one, on_failure: :three
         step :two
         switch CallableClass, name: :three
-
-        private
 
         def one(ctx, **)
           ctx[:one] = false
