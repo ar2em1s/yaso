@@ -6,8 +6,6 @@ RSpec.describe 'Failure', type: :integration do
       step :one
       failure :two
 
-      private
-
       def one(ctx, value:, **)
         ctx[:one] = value
       end
@@ -54,8 +52,6 @@ RSpec.describe 'Failure', type: :integration do
       create_service do
         failure :one
 
-        private
-
         def one(ctx, **)
           ctx[:one] = true
         end
@@ -73,8 +69,6 @@ RSpec.describe 'Failure', type: :integration do
         step :one
         failure :two
         failure :three
-
-        private
 
         def one(ctx, **)
           ctx[:one] = false
@@ -109,8 +103,6 @@ RSpec.describe 'Failure', type: :integration do
         step :one
         failure :two, fast: true
         failure :three
-
-        private
 
         def one(ctx, **)
           ctx[:one] = false
@@ -158,8 +150,6 @@ RSpec.describe 'Failure', type: :integration do
         failure :two, fast: :success
         failure :three
 
-        private
-
         def one(ctx, **)
           ctx[:one] = false
         end
@@ -206,8 +196,6 @@ RSpec.describe 'Failure', type: :integration do
         failure :two, fast: :failure
         failure :three
 
-        private
-
         def one(ctx, **)
           ctx[:one] = false
         end
@@ -253,8 +241,6 @@ RSpec.describe 'Failure', type: :integration do
         step :one
         failure :two
         step :three
-
-        private
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -307,8 +293,6 @@ RSpec.describe 'Failure', type: :integration do
         failure :three
         step :four
 
-        private
-
         def one(ctx, **)
           ctx[:one] = false
         end
@@ -358,8 +342,6 @@ RSpec.describe 'Failure', type: :integration do
         step :one
         failure :two, on_failure: :three
         step :three
-
-        private
 
         def one(ctx, **)
           ctx[:one] = false

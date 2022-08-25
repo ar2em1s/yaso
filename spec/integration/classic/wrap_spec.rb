@@ -7,8 +7,6 @@ RSpec.describe 'Wrap', type: :integration do
         step :two
       end
 
-      private
-
       def one(ctx, **)
         ctx[:one] = yield
       end
@@ -56,8 +54,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         step :three
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -88,8 +84,6 @@ RSpec.describe 'Wrap', type: :integration do
           step :two
         end
         step :three
-
-        private
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -124,8 +118,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         step :three
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -157,8 +149,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         step :three
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -189,8 +179,6 @@ RSpec.describe 'Wrap', type: :integration do
           step :two
         end
         failure :three
-
-        private
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -225,8 +213,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         failure :three
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -259,8 +245,6 @@ RSpec.describe 'Wrap', type: :integration do
           step :two
         end
         failure :three
-
-        private
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -295,8 +279,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         failure :three
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -328,8 +310,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         step :three
         failure :four
-
-        private
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -366,8 +346,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         step :three
         failure :four
-
-        private
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -411,8 +389,6 @@ RSpec.describe 'Wrap', type: :integration do
         step :three
         step :four
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -453,8 +429,6 @@ RSpec.describe 'Wrap', type: :integration do
         step :three
         failure :four
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -494,8 +468,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         step :three
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -523,8 +495,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         step :three
         failure :four
-
-        private
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -568,8 +538,6 @@ RSpec.describe 'Wrap', type: :integration do
         step :three
         step :four
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -611,8 +579,6 @@ RSpec.describe 'Wrap', type: :integration do
         end
         step :three
 
-        private
-
         def one(ctx, **)
           ctx[:one] = yield
         end
@@ -638,8 +604,6 @@ RSpec.describe 'Wrap', type: :integration do
         wrap CallableClass do
           step :two
         end
-
-        private
 
         def two(ctx, value:, **)
           ctx[:two] = value
@@ -673,8 +637,6 @@ RSpec.describe 'Wrap', type: :integration do
         wrap CallableClass, name: :three do
           step :four
         end
-
-        private
 
         def one(ctx, **)
           ctx[:one] = false

@@ -6,10 +6,6 @@ module Yaso
       @steps ||= []
     end
 
-    def clear_steps!
-      remove_instance_variable(:@steps)
-    end
-
     %i[step pass failure wrap switch].each do |category|
       define_method(category) do |object, options = {}, &block|
         raise InvalidFirstStepError, category if category == :failure && steps.empty?

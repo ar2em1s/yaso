@@ -5,8 +5,6 @@ RSpec.describe 'Step', type: :integration do
     create_service do
       step :one
 
-      private
-
       def one(ctx, value:, **)
         ctx[:one] = value
       end
@@ -42,8 +40,6 @@ RSpec.describe 'Step', type: :integration do
         step :one
         step :two
 
-        private
-
         def one(ctx, value:, **)
           ctx[:one] = value
         end
@@ -68,8 +64,6 @@ RSpec.describe 'Step', type: :integration do
       create_service do
         step :one
         step :two
-
-        private
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -98,8 +92,6 @@ RSpec.describe 'Step', type: :integration do
         step :one, fast: true
         step :two
 
-        private
-
         def one(ctx, value:, **)
           ctx[:one] = value
         end
@@ -125,8 +117,6 @@ RSpec.describe 'Step', type: :integration do
         step :one, fast: :success
         step :two
 
-        private
-
         def one(ctx, value:, **)
           ctx[:one] = value
         end
@@ -151,8 +141,6 @@ RSpec.describe 'Step', type: :integration do
       create_service do
         step :one
         failure :two
-
-        private
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -181,8 +169,6 @@ RSpec.describe 'Step', type: :integration do
         step :one, fast: true
         failure :two
 
-        private
-
         def one(ctx, value:, **)
           ctx[:one] = value
         end
@@ -209,8 +195,6 @@ RSpec.describe 'Step', type: :integration do
       create_service do
         step :one, fast: :failure
         failure :two
-
-        private
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -239,8 +223,6 @@ RSpec.describe 'Step', type: :integration do
         step :one
         failure :two
 
-        private
-
         def one(ctx, value:, **)
           ctx[:one] = value
         end
@@ -266,8 +248,6 @@ RSpec.describe 'Step', type: :integration do
         step :one
         step :two
         failure :three
-
-        private
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -298,8 +278,6 @@ RSpec.describe 'Step', type: :integration do
         step :one
         step :two
         failure :three
-
-        private
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -337,8 +315,6 @@ RSpec.describe 'Step', type: :integration do
         step :two
         step :three
 
-        private
-
         def one(ctx, value:, **)
           ctx[:one] = value
         end
@@ -373,8 +349,6 @@ RSpec.describe 'Step', type: :integration do
         step :two
         failure :three
 
-        private
-
         def one(ctx, value:, **)
           ctx[:one] = value
         end
@@ -407,8 +381,6 @@ RSpec.describe 'Step', type: :integration do
       create_service do
         step :one, on_success: :two
 
-        private
-
         def one(ctx, value:, **)
           ctx[:one] = value
         end
@@ -426,8 +398,6 @@ RSpec.describe 'Step', type: :integration do
         step :one, on_failure: :three
         step :two
         failure :three
-
-        private
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -465,8 +435,6 @@ RSpec.describe 'Step', type: :integration do
         step :two
         step :three
 
-        private
-
         def one(ctx, value:, **)
           ctx[:one] = value
         end
@@ -500,8 +468,6 @@ RSpec.describe 'Step', type: :integration do
     subject(:klass) do
       create_service do
         step :one, on_failure: :two
-
-        private
 
         def one(ctx, value:, **)
           ctx[:one] = value
