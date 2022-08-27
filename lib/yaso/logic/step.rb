@@ -5,7 +5,7 @@ module Yaso
     class Step < Base
       def call(context, instance)
         context.success = true
-        if @invokable.call(context, instance)
+        if @invocable.call(context, instance)
           @next_step
         else
           context.success = false

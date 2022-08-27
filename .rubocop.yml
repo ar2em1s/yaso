@@ -8,6 +8,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - vendor/bundle/**/*
+    - benchmark/vendor/bundle/**/*
 
 Gemspec/RequiredRubyVersion:
   Enabled: false

@@ -1,7 +1,15 @@
 # frozen_string_literal: true
 
 RSpec.describe Yaso::Stepable do
-  subject(:klass) { Class.new { extend Yaso::Stepable } }
+  subject(:klass) do
+    Class.new do
+      extend Yaso::Stepable
+
+      def self.flow
+        Yaso::Logic::Classic
+      end
+    end
+  end
 
   describe '.steps' do
     it 'returns empty array' do

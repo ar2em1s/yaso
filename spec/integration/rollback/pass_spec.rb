@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Pass', type: :integration, flow: :classic do
+RSpec.describe 'Pass', type: :integration, flow: :rollback do
   subject(:klass) do
     create_service do
       pass :one
@@ -139,8 +139,8 @@ RSpec.describe 'Pass', type: :integration, flow: :classic do
   context 'when next failure exists and pass fails' do
     subject(:klass) do
       create_service do
-        pass :one
         failure :two
+        pass :one
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -166,8 +166,8 @@ RSpec.describe 'Pass', type: :integration, flow: :classic do
   context 'when next failure exists and pass is fast: true' do
     subject(:klass) do
       create_service do
-        pass :one, fast: true
         failure :two
+        pass :one, fast: true
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -193,8 +193,8 @@ RSpec.describe 'Pass', type: :integration, flow: :classic do
   context 'when next failure exists and pass is fast: :failure' do
     subject(:klass) do
       create_service do
-        pass :one, fast: :failure
         failure :two
+        pass :one, fast: :failure
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -220,8 +220,8 @@ RSpec.describe 'Pass', type: :integration, flow: :classic do
   context 'when next failure exists and pass succeeds' do
     subject(:klass) do
       create_service do
-        pass :one
         failure :two
+        pass :one
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -245,9 +245,9 @@ RSpec.describe 'Pass', type: :integration, flow: :classic do
   context 'when next step and failure exist' do
     subject(:klass) do
       create_service do
+        failure :three
         pass :one
         step :two
-        failure :three
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -275,9 +275,9 @@ RSpec.describe 'Pass', type: :integration, flow: :classic do
   context 'when next step and failure exist and pass fails' do
     subject(:klass) do
       create_service do
+        failure :three
         pass :one
         step :two
-        failure :three
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -346,8 +346,8 @@ RSpec.describe 'Pass', type: :integration, flow: :classic do
     subject(:klass) do
       create_service do
         pass :one, on_success: :three
-        step :two
         failure :three
+        step :two
 
         def one(ctx, value:, **)
           ctx[:one] = value
@@ -396,8 +396,8 @@ RSpec.describe 'Pass', type: :integration, flow: :classic do
     subject(:klass) do
       create_service do
         pass :one, on_failure: :three
-        step :two
         failure :three
+        step :two
 
         def one(ctx, value:, **)
           ctx[:one] = value

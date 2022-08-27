@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Switch', type: :integration, flow: :classic do
+RSpec.describe 'Switch', type: :integration, flow: :rollback do
   subject(:klass) do
     create_service do
       switch :one, key: :value, cases: { true => :two, false => :three }
@@ -167,8 +167,8 @@ RSpec.describe 'Switch', type: :integration, flow: :classic do
   context 'when next failure exists and switch fails' do
     subject(:klass) do
       create_service do
-        switch :one, key: :value, cases: { true => :two, false => :three }
         failure :four
+        switch :one, key: :value, cases: { true => :two, false => :three }
 
         def two(ctx, **)
           ctx[:two] = true
@@ -198,8 +198,8 @@ RSpec.describe 'Switch', type: :integration, flow: :classic do
   context 'when next failure exists and switch is fast: true' do
     subject(:klass) do
       create_service do
-        switch :one, fast: true, key: :value, cases: { true => :two, false => :three }
         failure :four
+        switch :one, fast: true, key: :value, cases: { true => :two, false => :three }
 
         def two(ctx, **)
           ctx[:two] = true
@@ -229,8 +229,8 @@ RSpec.describe 'Switch', type: :integration, flow: :classic do
   context 'when next failure exists and switch is fast: :failure' do
     subject(:klass) do
       create_service do
-        switch :one, fast: :failure, key: :value, cases: { true => :two, false => :three }
         failure :four
+        switch :one, fast: :failure, key: :value, cases: { true => :two, false => :three }
 
         def two(ctx, **)
           ctx[:two] = true
@@ -260,8 +260,8 @@ RSpec.describe 'Switch', type: :integration, flow: :classic do
   context 'when next failure exists and switch succeeds' do
     subject(:klass) do
       create_service do
-        switch :one, key: :value, cases: { true => :two, false => :three }
         failure :four
+        switch :one, key: :value, cases: { true => :two, false => :three }
 
         def two(ctx, **)
           ctx[:two] = true
@@ -289,9 +289,9 @@ RSpec.describe 'Switch', type: :integration, flow: :classic do
   context 'when next step and failure exist' do
     subject(:klass) do
       create_service do
+        failure :five
         switch :one, key: :value, cases: { true => :two, false => :three }
         step :four
-        failure :five
 
         def two(ctx, **)
           ctx[:two] = true
@@ -323,9 +323,9 @@ RSpec.describe 'Switch', type: :integration, flow: :classic do
   context 'when next step and failure exist and switch fails' do
     subject(:klass) do
       create_service do
+        failure :five
         switch :one, key: :value, cases: { true => :two, false => :three }
         step :four
-        failure :five
 
         def two(ctx, **)
           ctx[:two] = true
@@ -402,8 +402,8 @@ RSpec.describe 'Switch', type: :integration, flow: :classic do
     subject(:klass) do
       create_service do
         switch :one, on_success: :five, key: :value, cases: { true => :two, false => :three }
-        step :four
         failure :five
+        step :four
 
         def two(ctx, **)
           ctx[:two] = true
@@ -460,8 +460,8 @@ RSpec.describe 'Switch', type: :integration, flow: :classic do
     subject(:klass) do
       create_service do
         switch :one, on_failure: :five, key: :value, cases: { true => :two, false => :three }
-        step :four
         failure :five
+        step :four
 
         def two(ctx, **)
           ctx[:two] = true

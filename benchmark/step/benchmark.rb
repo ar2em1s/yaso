@@ -7,6 +7,7 @@ Benchmark.ips do |x|
   x.config(stats: :bootstrap, confidence: 95)
 
   x.report('Pure Service') { PureStepsService.call }
+  x.report('SimpleCommand') { SimpleCommandStepsService.call }
   x.report('Yaso') { YasoStepsService.call }
   x.report('Decouplio') { DecouplioStepsService.call } unless RUBY_VERSION.include?('2.5')
   x.report('Interactor') { InteractorStepsService.call }
@@ -21,6 +22,7 @@ Benchmark.ips do |x|
   x.config(stats: :bootstrap, confidence: 95)
 
   x.report('Pure Service') { PureCallablesService.call }
+  x.report('SimpleCommand') { SimpleCommandCallablesService.call }
   x.report('Yaso') { YasoCallablesService.call }
   x.report('Decouplio') { DecouplioCallablesService.call } unless RUBY_VERSION.include?('2.5')
   x.report('Interactor') { InteractorCallablesService.call }
