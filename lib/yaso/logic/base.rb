@@ -5,9 +5,9 @@ module Yaso
     class Base
       attr_reader :name, :on_success, :on_failure
 
-      def initialize(name:, invokable:, **options)
+      def initialize(name:, invocable:, **options)
         @name = name
-        @invokable = invokable
+        @invocable = invocable
         @fast = options[:fast]
         @on_success = options[:on_success]
         @on_failure = options[:on_failure]
