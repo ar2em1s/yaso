@@ -16,13 +16,13 @@ module Yaso
       end
 
       def call(object:, category:, block:, **opts)
-        invokable_type, invokable = Invokable.call(object, **opts)
+        invocable_type, invocable = Invocable.call(object, **opts)
         logic_class = CATEGORIES[category]
-        if invokable_type == Invokable::METHOD
+        if invocable_type == Invocable::METHOD
           opts[:name] = logic_class == Switch ? build_switch(object, **opts, &block) : build_method(object, &block)
         end
         opts[:wrapper] = build_wrapper(&block) if logic_class == Wrap
-        logic_class.new(invokable: invokable, **opts)
+        logic_class.new(invocable: invocable, **opts)
       end
 
       private
@@ -45,14 +45,17 @@ module Yaso
 
       def build_wrapper(&block)
         wrapper_class = Class.new { extend Stepable }
+        build_wrapper_methods(wrapper_class, @klass)
         wrapper_class.instance_exec(&block)
-        build_wrapper_call(wrapper_class, @klass)
         wrapper_class
       end
 
-      def build_wrapper_call(wrapper_class, service_class)
+      def build_wrapper_methods(wrapper_class, service_class)
+        wrapper_class.define_singleton_method(:flow) do
+          service_class.flow
+        end
         wrapper_class.define_singleton_method(:call) do |context, instance|
-          @entry ||= Logic::Classic.call(service_class, steps)
+          @entry ||= flow.call(service_class, steps)
           step = @entry
           step = step.call(context, instance) while step
           context

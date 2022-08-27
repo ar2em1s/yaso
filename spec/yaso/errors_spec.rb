@@ -25,4 +25,13 @@ RSpec.describe 'Errors' do
 
     it { expect(error.message).to eq "Unhandled switch case in #{klass}" }
   end
+
+  describe Yaso::UnknownFlowError do
+    subject(:error) { described_class.new(klass, name) }
+
+    let(:klass) { FFaker::Lorem.word }
+    let(:name) { FFaker::Lorem.word }
+
+    it { expect(error.message).to eq "Unknown flow \"#{name}\" is set in #{klass}" }
+  end
 end

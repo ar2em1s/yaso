@@ -5,7 +5,7 @@ module Yaso
     class Failure < Base
       def call(context, instance)
         context.success = false
-        @invokable.call(context, instance) ? @next_step : @failure
+        @invocable.call(context, instance) ? @next_step : @failure
       end
     end
   end

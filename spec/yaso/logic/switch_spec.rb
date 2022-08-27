@@ -4,12 +4,12 @@ RSpec.describe Yaso::Logic::Switch do
   describe '#call' do
     subject(:result) { step.call(context, instance_double(Yaso::Service)) }
 
-    let(:step) { described_class.new(name: nil, invokable: invokable) }
-    let(:invokable) { proc { :method_name } }
+    let(:step) { described_class.new(name: nil, invocable: invocable) }
+    let(:invocable) { proc { :method_name } }
     let(:context) { Yaso::Context.new({}) }
 
-    context 'when invokable returns nil' do
-      let(:invokable) { proc {} }
+    context 'when invocable returns nil' do
+      let(:invocable) { proc {} }
 
       it 'raises UnhandledSwitchCase' do
         expect { result }.to raise_error(Yaso::UnhandledSwitchCaseError)
@@ -17,7 +17,7 @@ RSpec.describe Yaso::Logic::Switch do
     end
 
     context 'when switch case returns true' do
-      before { allow(Yaso::Invokable).to receive(:call).and_return([nil, proc { true }]) }
+      before { allow(Yaso::Invocable).to receive(:call).and_return([nil, proc { true }]) }
 
       it 'returns nil' do
         expect(result).to be_nil
@@ -33,7 +33,7 @@ RSpec.describe Yaso::Logic::Switch do
       let(:next_step) { instance_double(Yaso::Logic::Base) }
 
       before do
-        allow(Yaso::Invokable).to receive(:call).and_return([nil, proc { true }])
+        allow(Yaso::Invocable).to receive(:call).and_return([nil, proc { true }])
         step.add_next_step(next_step)
       end
 
@@ -48,7 +48,7 @@ RSpec.describe Yaso::Logic::Switch do
     end
 
     context 'when switch case returns false' do
-      before { allow(Yaso::Invokable).to receive(:call).and_return([nil, proc { false }]) }
+      before { allow(Yaso::Invocable).to receive(:call).and_return([nil, proc { false }]) }
 
       it 'returns nil' do
         expect(result).to be_nil
@@ -64,7 +64,7 @@ RSpec.describe Yaso::Logic::Switch do
       let(:failure) { instance_double(Yaso::Logic::Base) }
 
       before do
-        allow(Yaso::Invokable).to receive(:call).and_return([nil, proc { false }])
+        allow(Yaso::Invocable).to receive(:call).and_return([nil, proc { false }])
         step.add_failure(failure)
       end
 

@@ -4,8 +4,8 @@ RSpec.describe Yaso::Logic::Pass do
   describe '#call' do
     subject(:result) { step.call(context, instance_double(Yaso::Service)) }
 
-    let(:step) { described_class.new(name: nil, invokable: invokable) }
-    let(:invokable) { proc { true } }
+    let(:step) { described_class.new(name: nil, invocable: invocable) }
+    let(:invocable) { proc { true } }
     let(:context) { Yaso::Context.new({}) }
 
     context 'when next_step exists' do
@@ -26,7 +26,7 @@ RSpec.describe Yaso::Logic::Pass do
 
     context 'when step fails and failure exists' do
       let(:failure) { instance_double(Yaso::Logic::Base) }
-      let(:invokable) { proc { false } }
+      let(:invocable) { proc { false } }
 
       before { step.add_failure(failure) }
 
@@ -36,7 +36,7 @@ RSpec.describe Yaso::Logic::Pass do
     end
 
     context 'when step fails and failure is not defined' do
-      let(:invokable) { proc { false } }
+      let(:invocable) { proc { false } }
 
       it 'returns nil' do
         expect(result).to be_nil

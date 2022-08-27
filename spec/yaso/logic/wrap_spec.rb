@@ -4,8 +4,8 @@ RSpec.describe Yaso::Logic::Wrap do
   describe '#call' do
     subject(:result) { step.call(context, instance_double(Yaso::Service)) }
 
-    let(:step) { described_class.new(name: nil, invokable: invokable, wrapper: wrapper) }
-    let(:invokable) do
+    let(:step) { described_class.new(name: nil, invocable: invocable, wrapper: wrapper) }
+    let(:invocable) do
       proc do |&block|
         block.call
         true
@@ -41,7 +41,7 @@ RSpec.describe Yaso::Logic::Wrap do
 
     context 'when step fails and failure exists' do
       let(:failure) { instance_double(Yaso::Logic::Base) }
-      let(:invokable) { proc { false } }
+      let(:invocable) { proc { false } }
 
       before { step.add_failure(failure) }
 
@@ -56,7 +56,7 @@ RSpec.describe Yaso::Logic::Wrap do
     end
 
     context 'when step fails and failure is not defined' do
-      let(:invokable) { proc { false } }
+      let(:invocable) { proc { false } }
 
       it 'returns nil' do
         expect(result).to be_nil

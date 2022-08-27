@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Wrap', type: :integration, flow: :classic do
+RSpec.describe 'Wrap', type: :integration, flow: :rollback do
   subject(:klass) do
     create_service do
       wrap :one do
@@ -175,10 +175,10 @@ RSpec.describe 'Wrap', type: :integration, flow: :classic do
   context 'when next failure exists and wrap fails' do
     subject(:klass) do
       create_service do
+        failure :three
         wrap :one do
           step :two
         end
-        failure :three
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -208,10 +208,10 @@ RSpec.describe 'Wrap', type: :integration, flow: :classic do
   context 'when next failure exists and wrap is fast: true' do
     subject(:klass) do
       create_service do
+        failure :three
         wrap :one, fast: true do
           step :two
         end
-        failure :three
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -241,10 +241,10 @@ RSpec.describe 'Wrap', type: :integration, flow: :classic do
   context 'when next failure exists and wrap is fast: :failure' do
     subject(:klass) do
       create_service do
+        failure :three
         wrap :one, fast: :failure do
           step :two
         end
-        failure :three
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -274,10 +274,10 @@ RSpec.describe 'Wrap', type: :integration, flow: :classic do
   context 'when next failure exists and wrap succeeds' do
     subject(:klass) do
       create_service do
+        failure :three
         wrap :one do
           step :two
         end
-        failure :three
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -305,11 +305,11 @@ RSpec.describe 'Wrap', type: :integration, flow: :classic do
   context 'when next step and failure exist' do
     subject(:klass) do
       create_service do
+        failure :four
         wrap :one do
           step :two
         end
         step :three
-        failure :four
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -341,11 +341,11 @@ RSpec.describe 'Wrap', type: :integration, flow: :classic do
   context 'when next step and failure exist and wrap fails' do
     subject(:klass) do
       create_service do
+        failure :four
         wrap :one do
           step :two
         end
         step :three
-        failure :four
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -426,8 +426,8 @@ RSpec.describe 'Wrap', type: :integration, flow: :classic do
         wrap :one, on_success: :four do
           step :two
         end
-        step :three
         failure :four
+        step :three
 
         def one(ctx, **)
           ctx[:one] = yield
@@ -493,8 +493,8 @@ RSpec.describe 'Wrap', type: :integration, flow: :classic do
         wrap :one, on_failure: :four do
           step :two
         end
-        step :three
         failure :four
+        step :three
 
         def one(ctx, **)
           ctx[:one] = yield

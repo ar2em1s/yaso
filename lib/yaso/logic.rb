@@ -8,7 +8,13 @@ require_relative 'logic/wrap'
 require_relative 'logic/switch'
 require_relative 'logic/step_builder'
 require_relative 'logic/classic'
+require_relative 'logic/rollback'
 
 module Yaso
-  module Logic; end
+  module Logic
+    FLOWS = {
+      classic: Logic::Classic,
+      rollback: Logic::Rollback
+    }.freeze
+  end
 end

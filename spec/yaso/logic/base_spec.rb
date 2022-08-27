@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Yaso::Logic::Base do
-  subject(:step) { described_class.new(name: name, invokable: nil, **options) }
+  subject(:step) { described_class.new(name: name, invocable: nil, **options) }
 
   let(:name) { nil }
   let(:options) { {} }
