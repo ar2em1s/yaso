@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-RSpec.describe Yaso::Invokable do
+RSpec.describe Yaso::Invocable do
   describe '.call' do
-    subject(:invokable) { described_class.call(object, options: options).last }
+    subject(:invocable) { described_class.call(object, options: options).last }
 
-    let(:result) { invokable.call(context, instance) }
+    let(:result) { invocable.call(context, instance) }
     let(:object) { :foo }
     let(:options) { {} }
     let(:context) { instance_double(Yaso::Context) }
@@ -12,7 +12,7 @@ RSpec.describe Yaso::Invokable do
     let(:instance) { double(Yaso::Service) }
     # rubocop:enable RSpec/VerifiedDoubles
 
-    context 'when Yaso::Invokable::METHOD' do
+    context 'when Yaso::Invocable::METHOD' do
       before do
         allow(context).to receive(:data).and_return({})
         allow(instance).to receive(:foo)
@@ -28,7 +28,7 @@ RSpec.describe Yaso::Invokable do
       end
     end
 
-    context 'when Yaso::Invokable::YASO' do
+    context 'when Yaso::Invocable::YASO' do
       let(:object) { Yaso::Service }
 
       before do
@@ -43,7 +43,7 @@ RSpec.describe Yaso::Invokable do
       end
     end
 
-    context 'when Yaso::Invokable::CALLABLE' do
+    context 'when Yaso::Invocable::CALLABLE' do
       let(:object) { Class.new }
       let(:options) { { FFaker::Lorem.word.to_sym => FFaker::Lorem.word } }
 

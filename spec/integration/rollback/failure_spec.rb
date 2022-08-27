@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Failure', type: :integration, flow: :classic do
+RSpec.describe 'Failure', type: :integration, flow: :rollback do
   subject(:klass) do
     create_service do
-      step :one
       failure :two
+      step :one
 
       def one(ctx, value:, **)
         ctx[:one] = value
@@ -58,17 +58,17 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
       end
     end
 
-    it 'raises InvalidFirstStepError' do
-      expect { result }.to raise_error(Yaso::InvalidFirstStepError)
+    it 'does not raise InvalidFirstStepError' do
+      expect { result }.not_to raise_error(Yaso::InvalidFirstStepError)
     end
   end
 
   context 'when two failures' do
     subject(:klass) do
       create_service do
-        step :one
-        failure :two
         failure :three
+        failure :two
+        step :one
 
         def one(ctx, **)
           ctx[:one] = false
@@ -100,9 +100,9 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
   context 'when two failures and failure has fast: true' do
     subject(:klass) do
       create_service do
-        step :one
-        failure :two, fast: true
         failure :three
+        failure :two, fast: true
+        step :one
 
         def one(ctx, **)
           ctx[:one] = false
@@ -146,9 +146,9 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
   context 'when two failures and failure has fast: :success' do
     subject(:klass) do
       create_service do
-        step :one
-        failure :two, fast: :success
         failure :three
+        failure :two, fast: :success
+        step :one
 
         def one(ctx, **)
           ctx[:one] = false
@@ -192,9 +192,9 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
   context 'when two failures and failure has fast: :failure' do
     subject(:klass) do
       create_service do
-        step :one
-        failure :two, fast: :failure
         failure :three
+        failure :two, fast: :failure
+        step :one
 
         def one(ctx, **)
           ctx[:one] = false
@@ -242,16 +242,16 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
         failure :two
         step :three
 
-        def one(ctx, value:, **)
-          ctx[:one] = value
+        def one(ctx, **)
+          ctx[:one] = true
         end
 
         def two(ctx, **)
           ctx[:two] = true
         end
 
-        def three(ctx, **)
-          ctx[:three] = true
+        def three(ctx, value:, **)
+          ctx[:three] = value
         end
       end
     end
@@ -268,15 +268,15 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
       expect(result).to be_success
     end
 
-    context 'when step "one" fails' do
+    context 'when step "three" fails' do
       let(:params) { { value: false } }
 
       it 'invokes failure "two"' do
         expect(result[:two]).to be(true)
       end
 
-      it 'does not invoke step "three"' do
-        expect(result[:three]).to be_nil
+      it 'invokes step "three"' do
+        expect(result[:three]).to be(false)
       end
 
       it 'fails' do
@@ -288,9 +288,9 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
   context 'when failure has on_success' do
     subject(:klass) do
       create_service do
-        step :one
         failure :two, on_success: :four
         failure :three
+        step :one
         step :four
 
         def one(ctx, **)
@@ -339,8 +339,8 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
   context 'when failure has on_failure' do
     subject(:klass) do
       create_service do
-        step :one
         failure :two, on_failure: :three
+        step :one
         step :three
 
         def one(ctx, **)
@@ -381,8 +381,8 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
   context 'when failure is inline' do
     subject(:klass) do
       create_service do
-        step(:one) { |ctx, **| ctx[:one] = false }
         failure(:two) { |ctx, value:, **| ctx[:two] = value }
+        step(:one) { |ctx, **| ctx[:one] = false }
       end
     end
 
@@ -398,8 +398,8 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
   context 'when failure is inline and block is not passed' do
     subject(:klass) do
       create_service do
-        step(:one) { |ctx, **| ctx[:one] = false }
         failure(:two)
+        step(:one) { |ctx, **| ctx[:one] = false }
       end
     end
 
@@ -411,8 +411,8 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
   context 'when failure is a callable' do
     subject(:klass) do
       create_service do
-        step(:one) { |ctx, **| ctx[:one] = false }
         failure CallableClass
+        step(:one) { |ctx, **| ctx[:one] = false }
       end
     end
 
@@ -438,8 +438,8 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
     subject(:klass) do
       create_service do
         step :one, on_success: :three
-        step :two
         failure CallableClass, name: :three
+        step :two
 
         def one(ctx, **)
           ctx[:one] = true
@@ -476,8 +476,8 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
   context 'when failure is a Yaso::Service' do
     subject(:klass) do
       create_service do
-        step(:one) { |ctx, **| ctx[:one] = false }
         failure YasoServiceClass
+        step(:one) { |ctx, **| ctx[:one] = false }
       end
     end
 
@@ -501,8 +501,8 @@ RSpec.describe 'Failure', type: :integration, flow: :classic do
     subject(:klass) do
       create_service do
         step :one, on_success: :three
-        step :two
         failure YasoServiceClass, name: :three
+        step :two
 
         def one(ctx, **)
           ctx[:one] = true

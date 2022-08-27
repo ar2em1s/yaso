@@ -20,4 +20,10 @@ module Yaso
       super("Unhandled switch case in #{klass}")
     end
   end
+
+  class UnknownFlowError < Error
+    def initialize(klass, name)
+      super("Unknown flow \"#{name}\" is set in #{klass}")
+    end
+  end
 end
