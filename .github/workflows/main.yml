@@ -38,12 +38,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true
-        working-directory: benchmark
+    - name: Build image
+      run: docker-compose build --build-arg ${{ matrix.ruby }}
     - name: Run benchmarks
-      run: ruby index.rb
-      working-directory: benchmark
+      run: docker-compose up

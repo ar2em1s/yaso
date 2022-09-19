@@ -9,13 +9,8 @@ module Yaso
       end
 
       def call(context, instance)
-        context.success = true
-        if @invocable.call(context, instance) { @wrapper.call(context, instance).success? }
-          @next_step
-        else
-          context.success = false
-          @failure
-        end
+        result = @invocable.call(context, instance) { @wrapper.call(context, instance).success? }
+        result ? [@next_step, true] : [@failure, false]
       end
     end
   end
