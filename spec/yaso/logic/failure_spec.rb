@@ -6,7 +6,7 @@ RSpec.describe Yaso::Logic::Failure do
 
     let(:step) { described_class.new(name: nil, invocable: invocable) }
     let(:invocable) { proc { true } }
-    let(:context) { Yaso::Context.new({}) }
+    let(:context) { {} }
 
     context 'when next_step exists' do
       let(:next_step) { instance_double(Yaso::Logic::Base) }
@@ -14,13 +14,13 @@ RSpec.describe Yaso::Logic::Failure do
       before { step.add_next_step(next_step) }
 
       it 'returns the next step' do
-        expect(result).to eq(next_step)
+        expect(result).to eq([next_step, false])
       end
     end
 
     context 'when next_step is not defined' do
-      it 'returns nil' do
-        expect(result).to be_nil
+      it 'returns nil and false' do
+        expect(result).to eq([nil, false])
       end
     end
 
@@ -30,27 +30,16 @@ RSpec.describe Yaso::Logic::Failure do
 
       before { step.add_failure(failure) }
 
-      it 'returns failure' do
-        expect(result).to eq(failure)
+      it 'returns failure and false' do
+        expect(result).to eq([failure, false])
       end
     end
 
     context 'when step fails and failure is not defined' do
       let(:invocable) { proc { false } }
 
-      it 'returns nil' do
-        expect(result).to be_nil
-      end
-    end
-
-    context 'when context succeeds before' do
-      before do
-        context.success = true
-        result
-      end
-
-      it 'changes context status to failure' do
-        expect(context).to be_failure
+      it 'returns nil and false' do
+        expect(result).to eq([nil, false])
       end
     end
   end

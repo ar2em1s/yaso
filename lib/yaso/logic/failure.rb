@@ -4,8 +4,7 @@ module Yaso
   module Logic
     class Failure < Base
       def call(context, instance)
-        context.success = false
-        @invocable.call(context, instance) ? @next_step : @failure
+        [@invocable.call(context, instance) ? @next_step : @failure, false]
       end
     end
   end

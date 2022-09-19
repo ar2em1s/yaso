@@ -7,7 +7,7 @@ RSpec.describe Yaso::Logic::Base do
   let(:options) { {} }
 
   describe '#call' do
-    let(:params) { [instance_double(Yaso::Context), instance_double(Yaso::Service)] }
+    let(:params) { [{}, instance_double(Yaso::Service)] }
 
     it 'raises NotImplementedError' do
       expect { step.call(*params) }.to raise_error(NotImplementedError)

@@ -4,14 +4,46 @@ module Yaso
   class Service
     extend Stepable
 
+    attr_writer :success
+
+    def initialize(context)
+      @context = context
+      @success = true
+    end
+
+    def [](key)
+      @context[key]
+    end
+
+    def []=(key, value)
+      @context[key] = value
+    end
+
+    def success?
+      @success
+    end
+
+    def failure?
+      !@success
+    end
+
+    def to_h
+      @context.dup
+    end
+
+    def inspect
+      "Result:#{self.class} successful: #{@success}, context: #{@context}"
+    end
+
     class << self
       def call(context = {})
-        context = context.is_a?(Context) ? context : Context.new(context)
         @entry ||= flow.call(self, steps)
         step = @entry
-        instance = new
-        step = step.call(context, instance) while step
-        context
+        instance = new(context)
+        success = true
+        step, success = step.call(context, instance) while step
+        instance.success = success
+        instance
       end
 
       def flow(name = nil)

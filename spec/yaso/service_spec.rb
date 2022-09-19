@@ -1,6 +1,80 @@
 # frozen_string_literal: true
 
 RSpec.describe Yaso::Service do
+  subject(:result) { described_class.new(params) }
+
+  let(:params) { {} }
+
+  describe '#[]' do
+    let(:params) { { key => value } }
+    let(:key) { FFaker::Lorem.word }
+    let(:value) { FFaker::Lorem.word }
+
+    it 'returns the value' do
+      expect(result[key]).to eq(value)
+    end
+  end
+
+  describe '#[]=' do
+    let(:key) { FFaker::Lorem.word }
+    let(:value) { FFaker::Lorem.word }
+
+    before { result[key] = value }
+
+    it 'stores the value' do
+      expect(result[key]).to eq(value)
+    end
+  end
+
+  describe '#to_h' do
+    let(:params) { { one: FFaker::Lorem.word } }
+
+    it 'returns deep copy of the data' do
+      expect(result.to_h).to eq(params)
+    end
+  end
+
+  describe '#success?' do
+    context 'when result is success' do
+      it 'returns true' do
+        expect(result).to be_success
+      end
+    end
+
+    context 'when result is failed' do
+      before { result.success = false }
+
+      it 'returns false' do
+        expect(result).not_to be_success
+      end
+    end
+  end
+
+  describe '#failure?' do
+    context 'when result is success' do
+      it 'returns false' do
+        expect(result).not_to be_failure
+      end
+    end
+
+    context 'when result is failed' do
+      before { result.success = false }
+
+      it 'returns true' do
+        expect(result).to be_failure
+      end
+    end
+  end
+
+  describe '#inspect' do
+    let(:params) { { one: FFaker::Lorem.word } }
+    let(:expected_output) { "Result:#{result.class} successful: #{result.success?}, context: #{params}" }
+
+    it 'returns result description' do
+      expect(result.inspect).to eq(expected_output)
+    end
+  end
+
   describe '.call' do
     subject(:result) { Class.new(described_class).call(params) }
 
@@ -12,20 +86,10 @@ RSpec.describe Yaso::Service do
       allow(entry).to receive(:call)
     end
 
-    it 'creates a new context' do
-      allow(Yaso::Context).to receive(:new)
+    it 'creates a new service instance' do
+      allow(described_class).to receive(:new).and_call_original
       result
-      expect(Yaso::Context).to have_received(:new).with(params).once
-    end
-
-    context 'when context is passed' do
-      let!(:params) { Yaso::Context.new({}) }
-
-      it 'does not create a new context' do
-        allow(Yaso::Context).to receive(:new)
-        result
-        expect(Yaso::Context).not_to have_received(:new)
-      end
+      expect(described_class).to have_received(:new).with(params).once
     end
 
     it 'calls Flow to build a graph on the first call' do
@@ -47,8 +111,8 @@ RSpec.describe Yaso::Service do
       expect(entry).to have_received(:call)
     end
 
-    it 'returns a context' do
-      expect(result).to be_a(Yaso::Context)
+    it 'returns a result' do
+      expect(result).to be_a(described_class)
     end
   end
 
