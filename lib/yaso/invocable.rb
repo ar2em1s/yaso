@@ -10,7 +10,7 @@ module Yaso
       def call(object, options: {}, with_block: false, **)
         type = object_type(object)
         invocable = case type
-                    when YASO then proc { |context, _| object.call(context).success? }
+                    when YASO then proc { |context| object.call(context).success? }
                     when CALLABLE then callable_invocable(object, options, with_block: with_block)
                     else method_invocable(object, with_block: with_block)
                     end
@@ -26,9 +26,9 @@ module Yaso
       end
 
       def callable_invocable(object, options, with_block:)
-        return proc { |context, _, &block| object.call(context, **options, &block) } if with_block
+        return proc { |context, &block| object.call(context, **options, &block) } if with_block
 
-        proc { |context, _| object.call(context, **options) }
+        proc { |context| object.call(context, **options) }
       end
 
       def method_invocable(object, with_block:)

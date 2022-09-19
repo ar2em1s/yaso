@@ -24,7 +24,7 @@ RSpec.describe Yaso::Invocable do
     end
 
     context 'when Yaso::Invocable::YASO' do
-      let(:object) { Yaso::Service }
+      let(:object) { Class.new(Yaso::Service) }
 
       before do
         nested_service = instance_double(Yaso::Service)
