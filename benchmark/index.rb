@@ -2,14 +2,13 @@
 
 require 'bundler/setup'
 
-require_relative '../lib/yaso'
-
 require 'benchmark/ips'
 RUBY_VERSION.include?('2.5') || require('decouplio')
 require 'interactor'
 require 'active_interaction'
 require 'trailblazer'
 require 'simple_command'
+require 'yaso'
 
 require_relative 'shared/yaso_service'
 RUBY_VERSION.include?('2.5') || require_relative('shared/decouplio_service')

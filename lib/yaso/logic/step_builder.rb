@@ -16,8 +16,8 @@ module Yaso
       end
 
       def call(object:, category:, block:, **opts)
-        invocable_type, invocable = Invocable.call(object, **opts)
         logic_class = CATEGORIES[category]
+        invocable_type, invocable = Invocable.call(object, with_block: logic_class == Wrap, **opts)
         if invocable_type == Invocable::METHOD
           opts[:name] = logic_class == Switch ? build_switch(object, **opts, &block) : build_method(object, &block)
         end
@@ -51,14 +51,13 @@ module Yaso
       end
 
       def build_wrapper_methods(wrapper_class, service_class)
-        wrapper_class.define_singleton_method(:flow) do
-          service_class.flow
-        end
         wrapper_class.define_singleton_method(:call) do |context, instance|
-          @entry ||= flow.call(service_class, steps)
+          @entry ||= service_class.flow.call(service_class, steps)
           step = @entry
-          step = step.call(context, instance) while step
-          context
+          success = true
+          step, success = step.call(context, instance) while step
+          instance.success = success
+          instance
         end
       end
     end

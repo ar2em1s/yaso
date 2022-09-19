@@ -2,21 +2,19 @@
 
 RSpec.describe Yaso::Logic::Wrap do
   describe '#call' do
-    subject(:result) { step.call(context, instance_double(Yaso::Service)) }
+    subject(:result) { step.call({}, instance) }
 
     let(:step) { described_class.new(name: nil, invocable: invocable, wrapper: wrapper) }
-    let(:invocable) do
-      proc do |&block|
-        block.call
-        true
-      end
-    end
+    let(:invocable) { proc { |&block| block.call } }
     # rubocop:disable RSpec/VerifiedDoubles
     let(:wrapper) { double('Wrapper') }
     # rubocop:enable RSpec/VerifiedDoubles
-    let(:context) { Yaso::Context.new({}) }
+    let(:instance) { instance_double(Yaso::Service) }
 
-    before { allow(wrapper).to receive(:call).and_return(Yaso::Context.new({})) }
+    before do
+      allow(instance).to receive(:success?).and_return(true)
+      allow(wrapper).to receive(:call).and_return(instance)
+    end
 
     it 'calls wrapper' do
       result
@@ -28,43 +26,35 @@ RSpec.describe Yaso::Logic::Wrap do
 
       before { step.add_next_step(next_step) }
 
-      it 'returns the next step' do
-        expect(result).to eq(next_step)
+      it 'returns the next step and true' do
+        expect(result).to eq([next_step, true])
       end
     end
 
     context 'when next_step is not defined' do
-      it 'returns nil' do
-        expect(result).to be_nil
+      it 'returns nil and true' do
+        expect(result).to eq([nil, true])
       end
     end
 
     context 'when step fails and failure exists' do
       let(:failure) { instance_double(Yaso::Logic::Base) }
-      let(:invocable) { proc { false } }
 
-      before { step.add_failure(failure) }
-
-      it 'returns failure' do
-        expect(result).to eq(failure)
+      before do
+        allow(instance).to receive(:success?).and_return(false)
+        step.add_failure(failure)
       end
 
-      it 'changes context status to failure' do
-        result
-        expect(context).to be_failure
+      it 'returns failure and false' do
+        expect(result).to eq([failure, false])
       end
     end
 
     context 'when step fails and failure is not defined' do
-      let(:invocable) { proc { false } }
+      before { allow(instance).to receive(:success?).and_return(false) }
 
-      it 'returns nil' do
-        expect(result).to be_nil
-      end
-
-      it 'changes context status to failure' do
-        result
-        expect(context).to be_failure
+      it 'returns nil and false' do
+        expect(result).to eq([nil, false])
       end
     end
   end
