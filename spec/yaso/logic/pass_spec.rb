@@ -16,14 +16,14 @@ RSpec.describe Yaso::Logic::Pass do
 
       before { step.add_next_step(next_step) }
 
-      it 'returns the next step' do
-        expect(result).to eq(next_step)
+      it 'returns the next step and true' do
+        expect(result).to eq([next_step, true])
       end
     end
 
     context 'when next_step is not defined' do
-      it 'returns nil' do
-        expect(result).to be_nil
+      it 'returns nil and true' do
+        expect(result).to eq([nil, true])
       end
     end
 
@@ -33,8 +33,8 @@ RSpec.describe Yaso::Logic::Pass do
 
       before { step.add_failure(failure) }
 
-      it 'returns failure' do
-        expect(result).to eq(failure)
+      it 'returns failure and true' do
+        expect(result).to eq([failure, true])
       end
     end
 
