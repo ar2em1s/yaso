@@ -4,7 +4,8 @@ module Yaso
   module Logic
     class Pass < Base
       def call(context, instance)
-        [@invocable.call(context, instance) ? @next_step : @failure, true]
+        instance.success = true
+        @invocable.call(context, instance) ? @next_step : @failure
       end
     end
   end

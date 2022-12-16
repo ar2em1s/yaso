@@ -40,9 +40,7 @@ module Yaso
         @entry ||= flow.call(self, steps)
         step = @entry
         instance = new(context)
-        success = true
-        step, success = step.call(context, instance) while step
-        instance.success = success
+        step = step.call(context, instance) while step
         instance
       end
 

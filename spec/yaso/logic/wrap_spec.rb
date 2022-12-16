@@ -12,6 +12,7 @@ RSpec.describe Yaso::Logic::Wrap do
     let(:instance) { instance_double(Yaso::Service) }
 
     before do
+      allow(instance).to receive(:success=)
       allow(instance).to receive(:success?).and_return(true)
       allow(wrapper).to receive(:call).and_return(instance)
     end
@@ -27,13 +28,13 @@ RSpec.describe Yaso::Logic::Wrap do
       before { step.add_next_step(next_step) }
 
       it 'returns the next step and true' do
-        expect(result).to eq([next_step, true])
+        expect(result).to eq(next_step)
       end
     end
 
     context 'when next_step is not defined' do
       it 'returns nil and true' do
-        expect(result).to eq([nil, true])
+        expect(result).to be_nil
       end
     end
 
@@ -46,15 +47,15 @@ RSpec.describe Yaso::Logic::Wrap do
       end
 
       it 'returns failure and false' do
-        expect(result).to eq([failure, false])
+        expect(result).to eq(failure)
       end
     end
 
     context 'when step fails and failure is not defined' do
       before { allow(instance).to receive(:success?).and_return(false) }
 
-      it 'returns nil and false' do
-        expect(result).to eq([nil, false])
+      it 'returns nil' do
+        expect(result).to be_nil
       end
     end
   end
