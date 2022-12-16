@@ -54,9 +54,7 @@ module Yaso
         wrapper_class.define_singleton_method(:call) do |context, instance|
           @entry ||= service_class.flow.call(service_class, steps)
           step = @entry
-          success = true
-          step, success = step.call(context, instance) while step
-          instance.success = success
+          step = step.call(context, instance) while step
           instance
         end
       end

@@ -4,12 +4,6 @@ services:
     volumes:
       - .:/yaso
       - bundle:/bundle/cache
-    deploy:
-      resources:
-        limits:
-          cpus: '1.5'
-        reservations:
-          cpus: '1.5'
-            
-volumes: 
+
+volumes:
   bundle:
