@@ -30,5 +30,4 @@ require_relative 'step/interactor'
 require_relative 'step/active_interaction'
 require_relative 'step/trailblazer'
 require_relative 'step/dry_transaction'
-
 require_relative 'step/benchmark'

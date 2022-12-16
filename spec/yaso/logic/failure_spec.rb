@@ -17,13 +17,13 @@ RSpec.describe Yaso::Logic::Failure do
       before { step.add_next_step(next_step) }
 
       it 'returns the next step' do
-        expect(result).to eq([next_step, false])
+        expect(result).to eq(next_step)
       end
     end
 
     context 'when next_step is not defined' do
-      it 'returns nil and false' do
-        expect(result).to eq([nil, false])
+      it 'returns nil' do
+        expect(result).to be_nil
       end
     end
 
@@ -33,8 +33,8 @@ RSpec.describe Yaso::Logic::Failure do
 
       before { step.add_failure(failure) }
 
-      it 'returns failure and false' do
-        expect(result).to eq([failure, false])
+      it 'returns failure' do
+        expect(result).to eq(failure)
       end
     end
 
