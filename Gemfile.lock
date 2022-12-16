@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yaso (1.3.0)
+    yaso (1.3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -63,6 +63,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-21
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
