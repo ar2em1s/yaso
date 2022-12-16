@@ -2,10 +2,13 @@
 
 RSpec.describe Yaso::Logic::Switch do
   describe '#call' do
-    subject(:result) { step.call({}, instance_double(Yaso::Service)) }
+    subject(:result) { step.call({}, instance) }
 
+    let(:instance) { instance_double(Yaso::Service) }
     let(:step) { described_class.new(name: nil, invocable: invocable) }
     let(:invocable) { proc { :method_name } }
+
+    before { allow(instance).to receive(:success=) }
 
     context 'when invocable returns nil' do
       let(:invocable) { proc {} }
@@ -18,8 +21,8 @@ RSpec.describe Yaso::Logic::Switch do
     context 'when switch case returns true' do
       before { allow(Yaso::Invocable).to receive(:call).and_return([nil, proc { true }]) }
 
-      it 'returns nil and true' do
-        expect(result).to eq([nil, true])
+      it 'returns nil' do
+        expect(result).to be_nil
       end
     end
 
@@ -32,15 +35,15 @@ RSpec.describe Yaso::Logic::Switch do
       end
 
       it 'returns next_step and true' do
-        expect(result).to eq([next_step, true])
+        expect(result).to eq(next_step)
       end
     end
 
     context 'when switch case returns false' do
       before { allow(Yaso::Invocable).to receive(:call).and_return([nil, proc { false }]) }
 
-      it 'returns nil and false' do
-        expect(result).to eq([nil, false])
+      it 'returns nil' do
+        expect(result).to be_nil
       end
     end
 
@@ -52,8 +55,8 @@ RSpec.describe Yaso::Logic::Switch do
         step.add_failure(failure)
       end
 
-      it 'returns failure and false' do
-        expect(result).to eq([failure, false])
+      it 'returns failure' do
+        expect(result).to eq(failure)
       end
     end
   end

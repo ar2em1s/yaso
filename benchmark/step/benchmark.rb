@@ -13,6 +13,7 @@ Benchmark.ips do |x|
   x.report('Interactor') { InteractorStepsService.call }
   x.report('ActiveInteraction') { ActiveInteractionStepsService.run }
   x.report('Trailblazer') { TrailblazerStepsService.call }
+  x.report('DryTransaction') { DryTransactionStepsService.new.call({}) }
 
   x.compare!
 end
@@ -28,6 +29,7 @@ Benchmark.ips do |x|
   x.report('Interactor') { InteractorCallablesService.call }
   x.report('ActiveInteraction') { ActiveInteractionCallablesService.run }
   x.report('Trailblazer') { TrailblazerCallablesService.call }
+  x.report('DryTransaction') { DryTransactionCallablesService.new.call({}) }
 
   x.compare!
 end

@@ -64,7 +64,7 @@ module TrailblazerMacro
       ctx[:"result.#{id}"] = Trailblazer::Operation::Result.new(false, {})
       false
     end
-    task = Trailblazer::Activity::TaskBuilder::Binary(step)
+    task = Trailblazer::Activity::Circuit::TaskAdapter.for_step(step)
     { task: task, id: id }
   end
   # rubocop:enable Naming/MethodName

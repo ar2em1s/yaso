@@ -3,6 +3,17 @@
 source 'https://rubygems.org'
 
 gem 'benchmark-ips', '~> 2.10.0'
+
+DRY_CONTAINER = {
+  '2.5' => '~> 0.7.2',
+  '2.6' => '~> 0.9.0'
+}.freeze
+gem 'dry-container', DRY_CONTAINER.fetch(RUBY_VERSION.match(/\A\d+\.\d+/)[0], '~> 0.11.0')
+DRY_TRANSACTION = {
+  '2.5' => '~> 0.13.2',
+  '2.6' => '~> 0.13.3'
+}.freeze
+gem 'dry-transaction', DRY_TRANSACTION.fetch(RUBY_VERSION.match(/\A\d+\.\d+/)[0], '~> 0.15.0')
 gem 'interactor', '~> 3.1.2'
 gem 'kalibera', '~> 0.1.2'
 gem 'simple_command', RUBY_VERSION.include?('2.5') ? '~> 0.2.0' : '~> 1.0.1'
@@ -11,4 +22,4 @@ gem 'yaso', path: '..'
 
 gem 'active_interaction', %w[2.5 2.6].any? { |version| RUBY_VERSION.include?(version) } ? '~> 4.1.0' : '~> 5.1.0'
 
-RUBY_VERSION.include?('2.5') || gem('decouplio', '~> 1.0.0alpha8')
+RUBY_VERSION.include?('2.5') || gem('decouplio', '~> 1.0.0rc')
