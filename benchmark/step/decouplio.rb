@@ -14,43 +14,43 @@ class DecouplioStepsService < DecouplioService
     step :ten
   end
 
-  def one(**)
+  def one
     ctx[:one] = true
   end
 
-  def two(**)
+  def two
     ctx[:two] = true
   end
 
-  def three(**)
+  def three
     ctx[:three] = true
   end
 
-  def four(**)
+  def four
     ctx[:four] = true
   end
 
-  def five(**)
+  def five
     ctx[:five] = true
   end
 
-  def six(**)
+  def six
     ctx[:six] = true
   end
 
-  def seven(**)
+  def seven
     ctx[:seven] = true
   end
 
-  def eight(**)
+  def eight
     ctx[:eight] = true
   end
 
-  def nine(**)
+  def nine
     ctx[:nine] = true
   end
 
-  def ten(**)
+  def ten
     ctx[:ten] = true
   end
 end
