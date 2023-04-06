@@ -56,7 +56,7 @@ class DecouplioStepsService < DecouplioService
 end
 
 class DecouplioCallableStep
-  def self.call(ctx, _, key:, value:, **)
+  def self.call(ctx, _, key:, value:)
     ctx[key] = value
   end
 end

@@ -4,6 +4,8 @@ services:
     volumes:
       - .:/yaso
       - bundle:/bundle/cache
+    environment:
+      RUBYOPT: "${RUBYOPT:-}"
 
 volumes:
   bundle:
