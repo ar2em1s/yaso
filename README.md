@@ -27,7 +27,7 @@ All the information you can find in the gem [wiki](https://github.com/Ar2emis/ya
 
 ## Development
 
-I don't think that someone would like to help me developing the gem but if so just fork a repository, do your dark business, open a pull request and assign me as a reviewer. 
+I don't think that someone would like to help me developing the gem but if so just fork a repository, do your dark business, open a pull request and assign me as a reviewer.
 
 ## Contributing
 
