@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Failure', type: :integration, flow: :rollback do
+RSpec.describe 'Failure', flow: :rollback, type: :integration do
   subject(:klass) do
     create_service do
       failure :two

@@ -32,14 +32,18 @@ module Yaso
       end
 
       def method_invocable(object, with_block:)
-        if with_block
-          return instance_eval <<-RUBY, __FILE__, __LINE__ + 1
-            proc { |context, instance, &block|               # proc { |context, instance, &block|
-              instance.#{object}(context, **context, &block) #   instance.<method_name>(context, **context, &block)
-            }                                                # }
-          RUBY
-        end
+        with_block ? method_invocable_with_block(object) : method_invocable_without_block(object)
+      end
 
+      def method_invocable_with_block(object)
+        instance_eval <<-RUBY, __FILE__, __LINE__ + 1
+          proc { |context, instance, &block|               # proc { |context, instance, &block|
+            instance.#{object}(context, **context, &block) #   instance.<method_name>(context, **context, &block)
+          }                                                # }
+        RUBY
+      end
+
+      def method_invocable_without_block(object)
         instance_eval <<-RUBY, __FILE__, __LINE__ + 1
           proc { |context, instance|               # proc { |context, instance|
             instance.#{object}(context, **context) #   instance.<method_name>(context, **context)

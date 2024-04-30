@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Pass', type: :integration, flow: :classic do
+RSpec.describe 'Pass', flow: :classic, type: :integration do
   subject(:klass) do
     create_service do
       pass :one

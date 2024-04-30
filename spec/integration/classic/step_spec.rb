@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Step', type: :integration, flow: :classic do
+RSpec.describe 'Step', flow: :classic, type: :integration do
   subject(:klass) do
     create_service do
       step :one

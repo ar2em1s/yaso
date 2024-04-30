@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Switch', type: :integration, flow: :classic do
+RSpec.describe 'Switch', flow: :classic, type: :integration do
   subject(:klass) do
     create_service do
       switch :one, key: :value, cases: { true => :two, false => :three }

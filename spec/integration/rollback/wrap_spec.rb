@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Wrap', type: :integration, flow: :rollback do
+RSpec.describe 'Wrap', flow: :rollback, type: :integration do
   subject(:klass) do
     create_service do
       wrap :one do

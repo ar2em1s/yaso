@@ -22,7 +22,7 @@ Style/Documentation:
 Metrics/BlockLength:
   Exclude:
     - '*.gemspec'
-  IgnoredMethods:
+  AllowedMethods:
     - describe
     - context
 

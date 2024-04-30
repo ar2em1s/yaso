@@ -25,16 +25,5 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency('ffaker', '~> 2.21.0')
-  spec.add_development_dependency('lefthook', '~> 1.0.5')
-  spec.add_development_dependency('pry', '~> 0.14.1')
-  spec.add_development_dependency('rake', '~> 13.0.6')
-  spec.add_development_dependency('rspec', '~> 3.11.0')
-  spec.add_development_dependency('rubocop', '< 1.29.0', '>= 1.28.2')
-  spec.add_development_dependency('rubocop-ast', '< 1.18.0', '>= 1.17.0')
-  spec.add_development_dependency('rubocop-performance', '< 1.14.0', '>= 1.13.3')
-  spec.add_development_dependency('rubocop-rspec', '< 2.11.0', '>= 2.10.0')
-  spec.add_development_dependency('simplecov', '~> 0.21.2')
-
   spec.metadata['rubygems_mfa_required'] = 'true'
 end
