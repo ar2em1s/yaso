@@ -1,30 +1,23 @@
+inherit_mode:
+  merge:
+    - Exclude
+
 require:
-  - rubocop-rspec
+  - standard
+
+plugins:
+  - standard-custom
+  - standard-performance
   - rubocop-performance
+  - rubocop-rspec
+
+inherit_gem:
+  standard: config/base.yml
+  standard-performance: config/base.yml
+  standard-custom: config/base.yml
+
+inherit_from: []
 
 AllCops:
-  TargetRubyVersion: 2.5
-  SuggestExtensions: false
   NewCops: enable
-  Exclude:
-    - vendor/bundle/**/*
-    - benchmark/vendor/bundle/**/*
-
-Gemspec/RequiredRubyVersion:
-  Enabled: false
-
-Layout/LineLength:
-  Max: 120
-
-Style/Documentation:
-  Enabled: false
-
-Metrics/BlockLength:
-  Exclude:
-    - '*.gemspec'
-  AllowedMethods:
-    - describe
-    - context
-
-RSpec/LetSetup:
-  Enabled: false
+  SuggestExtensions: false

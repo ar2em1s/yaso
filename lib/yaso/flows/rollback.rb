@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 module Yaso
-  module Logic
+  module Flows
     class Rollback < Classic
       def call
         super
-        logicals.detect { |step| !step.is_a?(Failure) }
+        logicals.detect { |step| !step.is_a?(Steps::Failure) }
       end
 
       private
@@ -13,9 +11,9 @@ module Yaso
       def link_step(step, index)
         next_success = step.on_success ? find_step(step.on_success) : next_step(index)
         next_failure = if step.on_failure then find_step(step.on_failure)
-                       else
-                         step.is_a?(Pass) ? next_success : previous_failure(index)
-                       end
+        else
+          step.is_a?(Steps::Pass) ? next_success : previous_failure(index)
+        end
 
         step.add_next_step(next_success)
         step.add_failure(next_failure)
@@ -29,11 +27,11 @@ module Yaso
       end
 
       def next_step(index)
-        logicals[index.next..-1].detect { |next_node| !next_node.is_a?(Failure) }
+        logicals[index.next..].detect { |next_node| !next_node.is_a?(Steps::Failure) }
       end
 
       def previous_failure(index)
-        logicals[0...index].reverse_each.detect { |previous_step| previous_step.is_a?(Failure) }
+        logicals[0...index].reverse_each.detect { |previous_step| previous_step.is_a?(Steps::Failure) }
       end
     end
   end

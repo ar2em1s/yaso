@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-RSpec.describe 'Errors' do
+RSpec.describe "Errors" do
   describe Yaso::StepIsNotImplementedError do
     subject(:error) { described_class.new(klass, step) }
 

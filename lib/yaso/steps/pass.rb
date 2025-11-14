@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Yaso
-  module Logic
+  module Steps
     class Pass < Base
       def call(context, instance)
         instance.success = true

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class InteractorStepsService < InteractorService
   def call
     one
@@ -63,13 +61,13 @@ end
 
 class InteractorCallablesService < InteractorOrganizer
   organize InteractorCallableStep,
-           InteractorCallableStep,
-           InteractorCallableStep,
-           InteractorCallableStep,
-           InteractorCallableStep,
-           InteractorCallableStep,
-           InteractorCallableStep,
-           InteractorCallableStep,
-           InteractorCallableStep,
-           InteractorCallableStep
+    InteractorCallableStep,
+    InteractorCallableStep,
+    InteractorCallableStep,
+    InteractorCallableStep,
+    InteractorCallableStep,
+    InteractorCallableStep,
+    InteractorCallableStep,
+    InteractorCallableStep,
+    InteractorCallableStep
 end

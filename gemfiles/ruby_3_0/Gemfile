@@ -1,0 +1,8 @@
+group :development, :test do
+  gem "standard", "~> 1.51.1"
+  gem "rubocop-rspec", "~> 3.7.0"
+end
+
+group :test do
+  gem "ffaker", "~> 2.24.0"
+end

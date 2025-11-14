@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Yaso
-  module Logic
+  module Steps
     class Wrap < Base
       def initialize(wrapper:, **options)
         super(**options)

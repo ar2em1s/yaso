@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Yaso
   class Service
     extend Stepable
@@ -45,10 +43,10 @@ module Yaso
       end
 
       def flow(name = nil)
-        @flow ||= Logic::FLOWS[:classic] if self == Yaso::Service
+        @flow ||= Flows::MAP[:classic] if self == Yaso::Service
         return @flow || Yaso::Service.flow if name.nil?
 
-        @flow = Logic::FLOWS[name] || raise(UnknownFlowError.new(self, name))
+        @flow = Flows::MAP[name] || raise(UnknownFlowError.new(self, name))
       end
     end
   end

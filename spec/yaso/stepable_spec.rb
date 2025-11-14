@@ -1,33 +1,31 @@
-# frozen_string_literal: true
-
 RSpec.describe Yaso::Stepable do
   subject(:klass) do
     Class.new do
       extend Yaso::Stepable
 
       def self.flow
-        Yaso::Logic::Classic
+        Yaso::Flows::Classic
       end
     end
   end
 
-  describe '.steps' do
-    it 'returns empty array' do
+  describe ".steps" do
+    it "returns empty array" do
       expect(klass.steps).to eq([])
     end
 
-    context 'when step was added' do
+    context "when step was added" do
       let(:step) { FFaker::Lorem.word }
 
       before { klass.steps << step }
 
-      it 'returns array with steps' do
+      it "returns array with steps" do
         expect(klass.steps).to eq([step])
       end
     end
   end
 
-  describe '.step' do
+  describe ".step" do
     let(:step) { FFaker::Lorem.word }
     let(:expected_steps) do
       [
@@ -37,14 +35,14 @@ RSpec.describe Yaso::Stepable do
       ]
     end
 
-    it 'saves step to steps' do
+    it "saves step to steps" do
       klass.step step
       expect(klass.steps).to eq(expected_steps)
     end
 
-    context 'with additional options' do
+    context "with additional options" do
       let(:options) do
-        { fast: true, on_success: :success_name, on_failure: :failure_name, custom_option: 1, name: FFaker::Lorem.word }
+        {fast: true, on_success: :success_name, on_failure: :failure_name, custom_option: 1, name: FFaker::Lorem.word}
       end
       let(:step_block) { -> {} }
       let(:expected_steps) do
@@ -57,14 +55,14 @@ RSpec.describe Yaso::Stepable do
         ]
       end
 
-      it 'saves step to steps with options' do
+      it "saves step to steps with options" do
         klass.step step, **options, &step_block
         expect(klass.steps).to eq(expected_steps)
       end
     end
   end
 
-  describe '.failure' do
+  describe ".failure" do
     let(:failure) { FFaker::Lorem.word }
     let(:expected_steps) do
       [
@@ -78,14 +76,14 @@ RSpec.describe Yaso::Stepable do
 
     before { klass.steps << :first_step }
 
-    it 'saves failure to steps' do
+    it "saves failure to steps" do
       klass.failure failure
       expect(klass.steps).to eq(expected_steps)
     end
 
-    context 'with additional options' do
+    context "with additional options" do
       let(:options) do
-        { fast: true, on_success: :success_name, on_failure: :failure_name, custom_option: 1, name: FFaker::Lorem.word }
+        {fast: true, on_success: :success_name, on_failure: :failure_name, custom_option: 1, name: FFaker::Lorem.word}
       end
       let(:step_block) { -> {} }
       let(:expected_steps) do
@@ -99,22 +97,22 @@ RSpec.describe Yaso::Stepable do
         ]
       end
 
-      it 'saves failure to steps with options' do
+      it "saves failure to steps with options" do
         klass.failure failure, **options, &step_block
         expect(klass.steps).to eq(expected_steps)
       end
     end
 
-    context 'when failure is the first step' do
+    context "when failure is the first step" do
       before { klass.steps.clear }
 
-      it 'raises InvalidFirstStepError' do
+      it "raises InvalidFirstStepError" do
         expect { klass.failure(failure) }.to raise_error(Yaso::InvalidFirstStepError)
       end
     end
   end
 
-  describe '.pass' do
+  describe ".pass" do
     let(:pass) { FFaker::Lorem.word }
     let(:expected_steps) do
       [
@@ -124,14 +122,14 @@ RSpec.describe Yaso::Stepable do
       ]
     end
 
-    it 'saves pass to steps' do
+    it "saves pass to steps" do
       klass.pass pass
       expect(klass.steps).to eq(expected_steps)
     end
 
-    context 'with additional options' do
+    context "with additional options" do
       let(:options) do
-        { fast: true, on_success: :success_name, on_failure: :failure_name, custom_option: 1, name: FFaker::Lorem.word }
+        {fast: true, on_success: :success_name, on_failure: :failure_name, custom_option: 1, name: FFaker::Lorem.word}
       end
       let(:step_block) { -> {} }
       let(:expected_steps) do
@@ -144,14 +142,14 @@ RSpec.describe Yaso::Stepable do
         ]
       end
 
-      it 'saves pass to steps with options' do
+      it "saves pass to steps with options" do
         klass.pass pass, **options, &step_block
         expect(klass.steps).to eq(expected_steps)
       end
     end
   end
 
-  describe '.wrap' do
+  describe ".wrap" do
     let(:wrap) { FFaker::Lorem.word }
     let(:expected_steps) do
       [
@@ -161,14 +159,14 @@ RSpec.describe Yaso::Stepable do
       ]
     end
 
-    it 'saves wrap to steps' do
+    it "saves wrap to steps" do
       klass.wrap wrap
       expect(klass.steps).to eq(expected_steps)
     end
 
-    context 'with additional options' do
+    context "with additional options" do
       let(:options) do
-        { fast: true, on_success: :success_name, on_failure: :failure_name, custom_option: 1, name: FFaker::Lorem.word }
+        {fast: true, on_success: :success_name, on_failure: :failure_name, custom_option: 1, name: FFaker::Lorem.word}
       end
       let(:step_block) { -> {} }
       let(:expected_steps) do
@@ -181,7 +179,7 @@ RSpec.describe Yaso::Stepable do
         ]
       end
 
-      it 'saves wrap to steps with options' do
+      it "saves wrap to steps with options" do
         klass.wrap wrap, **options, &step_block
         expect(klass.steps).to eq(expected_steps)
       end

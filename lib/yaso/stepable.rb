@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Yaso
   module Stepable
     def steps
@@ -16,7 +14,7 @@ module Yaso
     end
 
     def failure(object, **options, &block)
-      raise InvalidFirstStepError, :failure if flow == Logic::Classic && steps.empty?
+      raise InvalidFirstStepError, :failure if flow == Flows::Classic && steps.empty?
 
       steps << {
         object: object, category: :failure, fast: options.delete(:fast), on_success: options.delete(:on_success),

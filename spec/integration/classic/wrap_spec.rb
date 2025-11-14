@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-RSpec.describe 'Wrap', flow: :classic, type: :integration do
+RSpec.describe "Wrap", flow: :classic, type: :integration do
   subject(:klass) do
     create_service do
       wrap :one do
@@ -17,36 +15,36 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
     end
   end
 
-  let(:params) { { value: true } }
+  let(:params) { {value: true} }
   let(:result) { klass.call(params) }
 
   it 'invokes wrap "one"' do
     expect(result[:one]).to be(true)
   end
 
-  it 'succeeds' do
+  it "succeeds" do
     expect(result).to be_success
   end
 
-  it 'invokes Yaso::Logic::Classic only twice (Service and wrapper)' do
-    allow(Yaso::Logic::Classic).to receive(:call).and_call_original
+  it "invokes Yaso::Flows::Classic only twice (Service and wrapper)" do
+    allow(Yaso::Flows::Classic).to receive(:call).and_call_original
     2.times { klass.call(params) }
-    expect(Yaso::Logic::Classic).to have_received(:call).twice
+    expect(Yaso::Flows::Classic).to have_received(:call).twice
   end
 
-  context 'when wrap fails' do
-    let(:params) { { value: false } }
+  context "when wrap fails" do
+    let(:params) { {value: false} }
 
     it 'invokes wrap "one"' do
       expect(result[:one]).to be(false)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when next step exists' do
+  context "when next step exists" do
     subject(:klass) do
       create_service do
         wrap :one do
@@ -72,12 +70,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:three]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step exists and wrap fails' do
+  context "when next step exists and wrap fails" do
     subject(:klass) do
       create_service do
         wrap :one do
@@ -99,18 +97,18 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "three"' do
       expect(result[:three]).to be_nil
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when next step exists and wrap is fast: true' do
+  context "when next step exists and wrap is fast: true" do
     subject(:klass) do
       create_service do
         wrap :one, fast: true do
@@ -136,12 +134,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:three]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step exists and wrap is fast: :success' do
+  context "when next step exists and wrap is fast: :success" do
     subject(:klass) do
       create_service do
         wrap :one, fast: :success do
@@ -167,12 +165,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:three]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next failure exists and wrap fails' do
+  context "when next failure exists and wrap fails" do
     subject(:klass) do
       create_service do
         wrap :one do
@@ -194,18 +192,18 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'invokes failure "three"' do
       expect(result[:three]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when next failure exists and wrap is fast: true' do
+  context "when next failure exists and wrap is fast: true" do
     subject(:klass) do
       create_service do
         wrap :one, fast: true do
@@ -227,18 +225,18 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke failure "three"' do
       expect(result[:three]).to be_nil
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when next failure exists and wrap is fast: :failure' do
+  context "when next failure exists and wrap is fast: :failure" do
     subject(:klass) do
       create_service do
         wrap :one, fast: :failure do
@@ -260,18 +258,18 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke failure "three"' do
       expect(result[:three]).to be_nil
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when next failure exists and wrap succeeds' do
+  context "when next failure exists and wrap succeeds" do
     subject(:klass) do
       create_service do
         wrap :one do
@@ -297,12 +295,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:three]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step and failure exist' do
+  context "when next step and failure exist" do
     subject(:klass) do
       create_service do
         wrap :one do
@@ -333,12 +331,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:three]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step and failure exist and wrap fails' do
+  context "when next step and failure exist and wrap fails" do
     subject(:klass) do
       create_service do
         wrap :one do
@@ -365,7 +363,7 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "three"' do
       expect(result[:three]).to be_nil
@@ -375,12 +373,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:four]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when wrap has on_success' do
+  context "when wrap has on_success" do
     subject(:klass) do
       create_service do
         wrap :one, on_success: :four do
@@ -415,12 +413,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:four]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when wrap has on_success to failure' do
+  context "when wrap has on_success to failure" do
     subject(:klass) do
       create_service do
         wrap :one, on_success: :four do
@@ -455,12 +453,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:four]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when wrap has on_success to undefined step' do
+  context "when wrap has on_success to undefined step" do
     subject(:klass) do
       create_service do
         wrap :one, on_success: :four do
@@ -482,12 +480,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       end
     end
 
-    it 'raises StepIsNotImplementedError' do
+    it "raises StepIsNotImplementedError" do
       expect { result }.to raise_error(Yaso::StepIsNotImplementedError)
     end
   end
 
-  context 'when step has on_failure' do
+  context "when step has on_failure" do
     subject(:klass) do
       create_service do
         wrap :one, on_failure: :four do
@@ -514,7 +512,7 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "three"' do
       expect(result[:three]).to be_nil
@@ -524,12 +522,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:four]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when wrap has on_failure to step' do
+  context "when wrap has on_failure to step" do
     subject(:klass) do
       create_service do
         wrap :one, on_failure: :four do
@@ -556,7 +554,7 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "three"' do
       expect(result[:three]).to be_nil
@@ -566,12 +564,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:four]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when step has on_failure to undefined step' do
+  context "when step has on_failure to undefined step" do
     subject(:klass) do
       create_service do
         wrap :one, on_failure: :four do
@@ -593,12 +591,12 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       end
     end
 
-    it 'raises StepIsNotImplementedError' do
+    it "raises StepIsNotImplementedError" do
       expect { result }.to raise_error(Yaso::StepIsNotImplementedError)
     end
   end
 
-  context 'when step is a callable' do
+  context "when step is a callable" do
     subject(:klass) do
       create_service do
         wrap CallableClass do
@@ -617,19 +615,19 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
           ctx[:one] = yield
         end
       end
-      stub_const('CallableClass', constant)
+      stub_const("CallableClass", constant)
     end
 
-    it 'invokes constant' do
+    it "invokes constant" do
       expect(result[:one]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when step is a callable and has a name' do
+  context "when step is a callable and has a name" do
     subject(:klass) do
       create_service do
         step :one, on_failure: :three
@@ -658,10 +656,10 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
           ctx[:three] = yield
         end
       end
-      stub_const('CallableClass', constant)
+      stub_const("CallableClass", constant)
     end
 
-    it 'invokes constant' do
+    it "invokes constant" do
       expect(result[:three]).to be(true)
     end
 
@@ -669,7 +667,7 @@ RSpec.describe 'Wrap', flow: :classic, type: :integration do
       expect(result[:two]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end

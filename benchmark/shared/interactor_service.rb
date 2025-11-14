@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class InteractorService
   include Interactor
 end

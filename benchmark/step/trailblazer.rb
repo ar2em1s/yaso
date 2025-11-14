@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class TrailblazerStepsService < TrailblazerService
   step :one
   step :two
@@ -65,7 +63,7 @@ module TrailblazerMacro
       false
     end
     task = Trailblazer::Activity::Circuit::TaskAdapter.for_step(step)
-    { task: task, id: id }
+    {task: task, id: id}
   end
   # rubocop:enable Naming/MethodName
 end

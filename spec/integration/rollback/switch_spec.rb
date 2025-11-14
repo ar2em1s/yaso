@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
-RSpec.describe 'Switch', flow: :rollback, type: :integration do
+RSpec.describe "Switch", flow: :rollback, type: :integration do
   subject(:klass) do
     create_service do
-      switch :one, key: :value, cases: { true => :two, false => :three }
+      switch :one, key: :value, cases: {true => :two, false => :three}
 
       def two(ctx, **)
         ctx[:two] = true
@@ -15,41 +13,41 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
     end
   end
 
-  let(:params) { { value: true } }
+  let(:params) { {value: true} }
   let(:result) { klass.call(params) }
 
   it 'invokes step "two"' do
     expect(result[:two]).to be(true)
   end
 
-  it 'succeeds' do
+  it "succeeds" do
     expect(result).to be_success
   end
 
-  context 'when switch case fails' do
-    let(:params) { { value: false } }
+  context "when switch case fails" do
+    let(:params) { {value: false} }
 
     it 'invokes step "three"' do
       expect(result[:three]).to be(false)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when switch case is unhandled' do
-    let(:params) { { value: nil } }
+  context "when switch case is unhandled" do
+    let(:params) { {value: nil} }
 
-    it 'raises Yaso::UnhandledSwitchCaseError' do
+    it "raises Yaso::UnhandledSwitchCaseError" do
       expect { result }.to raise_error(Yaso::UnhandledSwitchCaseError)
     end
   end
 
-  context 'when next step exists' do
+  context "when next step exists" do
     subject(:klass) do
       create_service do
-        switch :one, key: :value, cases: { true => :two, false => :three }
+        switch :one, key: :value, cases: {true => :two, false => :three}
         step :four
 
         def two(ctx, **)
@@ -70,15 +68,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:four]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step exists and switch fails' do
+  context "when next step exists and switch fails" do
     subject(:klass) do
       create_service do
-        switch :one, key: :value, cases: { true => :two, false => :three }
+        switch :one, key: :value, cases: {true => :two, false => :three}
         step :four
 
         def two(ctx, **)
@@ -95,21 +93,21 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "four"' do
       expect(result[:four]).to be_nil
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when next step exists and switch is fast: true' do
+  context "when next step exists and switch is fast: true" do
     subject(:klass) do
       create_service do
-        switch :one, fast: true, key: :value, cases: { true => :two, false => :three }
+        switch :one, fast: true, key: :value, cases: {true => :two, false => :three}
         step :four
 
         def two(ctx, **)
@@ -130,15 +128,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:four]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step exists and switch is fast: :success' do
+  context "when next step exists and switch is fast: :success" do
     subject(:klass) do
       create_service do
-        switch :one, fast: :success, key: :value, cases: { true => :two, false => :three }
+        switch :one, fast: :success, key: :value, cases: {true => :two, false => :three}
         step :four
 
         def two(ctx, **)
@@ -159,16 +157,16 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:four]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next failure exists and switch fails' do
+  context "when next failure exists and switch fails" do
     subject(:klass) do
       create_service do
         failure :four
-        switch :one, key: :value, cases: { true => :two, false => :three }
+        switch :one, key: :value, cases: {true => :two, false => :three}
 
         def two(ctx, **)
           ctx[:two] = true
@@ -184,22 +182,22 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'invokes failure "four"' do
       expect(result[:four]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when next failure exists and switch is fast: true' do
+  context "when next failure exists and switch is fast: true" do
     subject(:klass) do
       create_service do
         failure :four
-        switch :one, fast: true, key: :value, cases: { true => :two, false => :three }
+        switch :one, fast: true, key: :value, cases: {true => :two, false => :three}
 
         def two(ctx, **)
           ctx[:two] = true
@@ -215,22 +213,22 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke failure "four"' do
       expect(result[:four]).to be_nil
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when next failure exists and switch is fast: :failure' do
+  context "when next failure exists and switch is fast: :failure" do
     subject(:klass) do
       create_service do
         failure :four
-        switch :one, fast: :failure, key: :value, cases: { true => :two, false => :three }
+        switch :one, fast: :failure, key: :value, cases: {true => :two, false => :three}
 
         def two(ctx, **)
           ctx[:two] = true
@@ -246,22 +244,22 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke failure "four"' do
       expect(result[:four]).to be_nil
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when next failure exists and switch succeeds' do
+  context "when next failure exists and switch succeeds" do
     subject(:klass) do
       create_service do
         failure :four
-        switch :one, key: :value, cases: { true => :two, false => :three }
+        switch :one, key: :value, cases: {true => :two, false => :three}
 
         def two(ctx, **)
           ctx[:two] = true
@@ -281,16 +279,16 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:four]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step and failure exist' do
+  context "when next step and failure exist" do
     subject(:klass) do
       create_service do
         failure :five
-        switch :one, key: :value, cases: { true => :two, false => :three }
+        switch :one, key: :value, cases: {true => :two, false => :three}
         step :four
 
         def two(ctx, **)
@@ -315,16 +313,16 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:four]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step and failure exist and switch fails' do
+  context "when next step and failure exist and switch fails" do
     subject(:klass) do
       create_service do
         failure :five
-        switch :one, key: :value, cases: { true => :two, false => :three }
+        switch :one, key: :value, cases: {true => :two, false => :three}
         step :four
 
         def two(ctx, **)
@@ -345,7 +343,7 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "four"' do
       expect(result[:four]).to be_nil
@@ -355,15 +353,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:five]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when switch has on_success' do
+  context "when switch has on_success" do
     subject(:klass) do
       create_service do
-        switch :one, on_success: :five, key: :value, cases: { true => :two, false => :three }
+        switch :one, on_success: :five, key: :value, cases: {true => :two, false => :three}
         step :four
         step :five
 
@@ -393,15 +391,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:five]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when switch has on_success to failure' do
+  context "when switch has on_success to failure" do
     subject(:klass) do
       create_service do
-        switch :one, on_success: :five, key: :value, cases: { true => :two, false => :three }
+        switch :one, on_success: :five, key: :value, cases: {true => :two, false => :three}
         failure :five
         step :four
 
@@ -431,15 +429,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:five]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when switch has on_success to undefined step' do
+  context "when switch has on_success to undefined step" do
     subject(:klass) do
       create_service do
-        switch :one, on_success: :four, key: :value, cases: { true => :two, false => :three }
+        switch :one, on_success: :four, key: :value, cases: {true => :two, false => :three}
 
         def two(ctx, **)
           ctx[:two] = true
@@ -451,15 +449,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       end
     end
 
-    it 'raises StepIsNotImplementedError' do
+    it "raises StepIsNotImplementedError" do
       expect { result }.to raise_error(Yaso::StepIsNotImplementedError)
     end
   end
 
-  context 'when switch has on_failure' do
+  context "when switch has on_failure" do
     subject(:klass) do
       create_service do
-        switch :one, on_failure: :five, key: :value, cases: { true => :two, false => :three }
+        switch :one, on_failure: :five, key: :value, cases: {true => :two, false => :three}
         failure :five
         step :four
 
@@ -481,7 +479,7 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "four"' do
       expect(result[:four]).to be_nil
@@ -491,15 +489,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:five]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when switch has on_failure to step' do
+  context "when switch has on_failure to step" do
     subject(:klass) do
       create_service do
-        switch :one, on_failure: :five, key: :value, cases: { true => :two, false => :three }
+        switch :one, on_failure: :five, key: :value, cases: {true => :two, false => :three}
         step :four
         step :five
 
@@ -521,7 +519,7 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "four"' do
       expect(result[:four]).to be_nil
@@ -531,15 +529,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:five]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when switch has on_failure to undefined step' do
+  context "when switch has on_failure to undefined step" do
     subject(:klass) do
       create_service do
-        switch :one, on_failure: :four, key: :value, cases: { true => :two, false => :three }
+        switch :one, on_failure: :four, key: :value, cases: {true => :two, false => :three}
 
         def two(ctx, **)
           ctx[:two] = true
@@ -551,15 +549,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       end
     end
 
-    it 'raises StepIsNotImplementedError' do
+    it "raises StepIsNotImplementedError" do
       expect { result }.to raise_error(Yaso::StepIsNotImplementedError)
     end
   end
 
-  context 'when switch is hidden' do
+  context "when switch is hidden" do
     subject(:klass) do
       create_service do
-        switch :one, key: :value, cases: { true => :two }
+        switch :one, key: :value, cases: {true => :two}
 
         def two(ctx, **)
           ctx[:two] = true
@@ -571,23 +569,23 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:two]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
 
-    context 'when unhandled case happens' do
-      let(:params) { { value: false } }
+    context "when unhandled case happens" do
+      let(:params) { {value: false} }
 
-      it 'raises Yaso::UnhandledSwitchCaseError' do
+      it "raises Yaso::UnhandledSwitchCaseError" do
         expect { result }.to raise_error(Yaso::UnhandledSwitchCaseError)
       end
     end
   end
 
-  context 'when switch is inline' do
+  context "when switch is inline" do
     subject(:klass) do
       create_service do
-        switch(:one) { |_, value:, **| { true => :two }[value] }
+        switch(:one) { |_, value:, **| {true => :two}[value] }
 
         def two(ctx, **)
           ctx[:two] = true
@@ -599,20 +597,20 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:two]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
 
-    context 'when unhandled case happens' do
-      let(:params) { { value: false } }
+    context "when unhandled case happens" do
+      let(:params) { {value: false} }
 
-      it 'raises Yaso::UnhandledSwitchCaseError' do
+      it "raises Yaso::UnhandledSwitchCaseError" do
         expect { result }.to raise_error(Yaso::UnhandledSwitchCaseError)
       end
     end
   end
 
-  context 'when switch is callable' do
+  context "when switch is callable" do
     subject(:klass) do
       create_service do
         switch CallableClass
@@ -626,30 +624,30 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
     before do
       constant = Class.new do
         def self.call(ctx, **)
-          { true => :two }[ctx[:value]]
+          {true => :two}[ctx[:value]]
         end
       end
-      stub_const('CallableClass', constant)
+      stub_const("CallableClass", constant)
     end
 
     it 'invokes step "two"' do
       expect(result[:two]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
 
-    context 'when unhandled case happens' do
-      let(:params) { { value: false } }
+    context "when unhandled case happens" do
+      let(:params) { {value: false} }
 
-      it 'raises Yaso::UnhandledSwitchCaseError' do
+      it "raises Yaso::UnhandledSwitchCaseError" do
         expect { result }.to raise_error(Yaso::UnhandledSwitchCaseError)
       end
     end
   end
 
-  context 'when switch is callable and has a name' do
+  context "when switch is callable and has a name" do
     subject(:klass) do
       create_service do
         step :one, on_failure: :three
@@ -673,10 +671,10 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
     before do
       constant = Class.new do
         def self.call(ctx, **)
-          { true => :four }[ctx[:value]]
+          {true => :four}[ctx[:value]]
         end
       end
-      stub_const('CallableClass', constant)
+      stub_const("CallableClass", constant)
     end
 
     it 'does not invoke step "two"' do
@@ -687,15 +685,15 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       expect(result[:four]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when switch case is a callable' do
+  context "when switch case is a callable" do
     subject(:klass) do
       create_service do
-        switch :one, key: :value, cases: { true => CallableClass }
+        switch :one, key: :value, cases: {true => CallableClass}
       end
     end
 
@@ -705,22 +703,22 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
           ctx[:two] = true
         end
       end
-      stub_const('CallableClass', constant)
+      stub_const("CallableClass", constant)
     end
 
-    it 'invokes constant' do
+    it "invokes constant" do
       expect(result[:two]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when switch case is a Yaso::Service' do
+  context "when switch case is a Yaso::Service" do
     subject(:klass) do
       create_service do
-        switch :one, key: :value, cases: { true => YasoServiceClass }
+        switch :one, key: :value, cases: {true => YasoServiceClass}
       end
     end
 
@@ -728,14 +726,14 @@ RSpec.describe 'Switch', flow: :rollback, type: :integration do
       constant = create_service do
         step(:two) { |ctx, **| ctx[:two] = true }
       end
-      stub_const('YasoServiceClass', constant)
+      stub_const("YasoServiceClass", constant)
     end
 
-    it 'invokes constant' do
+    it "invokes constant" do
       expect(result[:two]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end

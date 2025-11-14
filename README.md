@@ -1,7 +1,7 @@
 # Yaso
-[![Ruby](https://github.com/Ar2emis/yaso/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Ar2emis/yaso/actions/workflows/main.yml) ![gem](https://img.shields.io/gem/v/yaso) [![GitHub license](https://img.shields.io/github/license/Ar2emis/yaso)](https://github.com/Ar2emis/yaso/blob/master/LICENSE.txt)
+[![Ruby](https://github.com/ar2em1s/yaso/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/ar2em1s/yaso/actions/workflows/main.yml) ![gem](https://img.shields.io/gem/v/yaso) [![GitHub license](https://img.shields.io/github/license/ar2em1s/yaso)](https://github.com/ar2em1s/yaso/blob/master/LICENSE.txt)
 
-That's my (Yet Another) ServiceObject pattern implementation. I made it fast ([the fastest of this kind actually](https://github.com/Ar2emis/yaso/wiki/Benchmarks); [simple_command](https://github.com/nebulab/simple_command), you got me this time) and simple to use (I hope). I was inspired by those alternatives and I hope this will encourage them to be even better:
+That's my (Yet Another) ServiceObject pattern implementation. I made it fast ([benchmarks](https://github.com/ar2em1s/yaso/wiki/Benchmarks)) and simple to use (I hope). I was inspired by those alternatives and I hope this will encourage them to be even better:
 - [Trailblazer](https://github.com/trailblazer/trailblazer)
 - [Decouplio](https://github.com/differencialx/decouplio)
 
@@ -10,20 +10,24 @@ That's my (Yet Another) ServiceObject pattern implementation. I made it fast ([t
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'yaso'
+gem "yaso"
 ```
 
 And then execute:
 
-    $ bundle install
+```bash
+bundle install
+```
 
 Or install it yourself as:
 
-    $ gem install yaso
+```bash
+gem install yaso
+```
 
 ## Usage
 
-All the information you can find in the gem [wiki](https://github.com/Ar2emis/yaso/wiki).
+All the information you can find in the gem [wiki](https://github.com/ar2em1s/yaso/wiki).
 
 ## Development
 
@@ -31,7 +35,7 @@ I don't think that someone would like to help me developing the gem but if so ju
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Ar2emis/yaso.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ar2em1s/yaso.
 
 ## License
 

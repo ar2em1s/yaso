@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Yaso
-  module Logic
+  module Flows
     class Classic
       def self.call(klass, steps)
         new(klass, steps).call
@@ -14,7 +12,7 @@ module Yaso
       end
 
       def call
-        logicals.each_with_index { |step, i| step.is_a?(Failure) ? link_failure(step, i) : link_step(step, i) }
+        logicals.each_with_index { |step, i| step.is_a?(Steps::Failure) ? link_failure(step, i) : link_step(step, i) }
         logicals.first
       end
 
@@ -25,9 +23,9 @@ module Yaso
       end
 
       def link_step(step, index)
-        next_step = logicals[index.next..-1].detect { |next_node| !next_node.is_a?(Failure) }
+        next_step = logicals[index.next..].detect { |next_node| !next_node.is_a?(Steps::Failure) }
         step.add_next_step(step.on_success ? find_step(step.on_success) : next_step)
-        step.add_failure(next_step) if step.is_a?(Pass)
+        step.add_failure(next_step) if step.is_a?(Steps::Pass)
         step.add_failure(find_step(step.on_failure)) if step.on_failure
       end
 
@@ -39,8 +37,8 @@ module Yaso
 
       def link_previous_steps(failure, index)
         logicals[0...index].reverse_each do |previous_step|
-          previous_step.add_failure(failure) unless previous_step.on_failure || previous_step.is_a?(Pass)
-          next unless previous_step.is_a?(Failure)
+          previous_step.add_failure(failure) unless previous_step.on_failure || previous_step.is_a?(Steps::Pass)
+          next unless previous_step.is_a?(Steps::Failure)
 
           previous_step.add_next_step(failure) unless previous_step.on_success
           break

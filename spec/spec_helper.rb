@@ -1,14 +1,12 @@
-# frozen_string_literal: true
+require "simplecov"
+require "yaso"
 
-require 'simplecov'
-require 'yaso'
-
-require 'ffaker'
+require "ffaker"
 
 Dir["#{Dir.pwd}/spec/support/**/*.rb"].sort.each { |file| require file }
 
 RSpec.configure do |config|
-  config.example_status_persistence_file_path = '.rspec_status'
+  config.example_status_persistence_file_path = ".rspec_status"
 
   config.disable_monkey_patching!
   config.include ServiceClassHelpers, type: :integration

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Yaso
   class Invocable
     METHOD = :method
@@ -10,10 +8,10 @@ module Yaso
       def call(object, options: {}, with_block: false, **)
         type = object_type(object)
         invocable = case type
-                    when YASO then proc { |context| object.call(context).success? }
-                    when CALLABLE then callable_invocable(object, options, with_block: with_block)
-                    else method_invocable(object, with_block: with_block)
-                    end
+        when YASO then proc { |context| object.call(context).success? }
+        when CALLABLE then callable_invocable(object, options, with_block: with_block)
+        else method_invocable(object, with_block: with_block)
+        end
         [type, invocable]
       end
 
@@ -22,7 +20,7 @@ module Yaso
       def object_type(object)
         return Invocable::METHOD unless object.is_a?(Class)
 
-        object < ::Yaso::Service ? Invocable::YASO : Invocable::CALLABLE
+        (object < ::Yaso::Service) ? Invocable::YASO : Invocable::CALLABLE
       end
 
       def callable_invocable(object, options, with_block:)

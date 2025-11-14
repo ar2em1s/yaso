@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class SimpleCommandStepsService < SimpleCommandService
   # rubocop:disable Metrics/MethodLength
   def call

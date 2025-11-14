@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-RSpec.describe 'Pass', flow: :classic, type: :integration do
+RSpec.describe "Pass", flow: :classic, type: :integration do
   subject(:klass) do
     create_service do
       pass :one
@@ -11,30 +9,30 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
     end
   end
 
-  let(:params) { { value: true } }
+  let(:params) { {value: true} }
   let(:result) { klass.call(params) }
 
   it 'invokes pass "one"' do
     expect(result[:one]).to be(true)
   end
 
-  it 'succeeds' do
+  it "succeeds" do
     expect(result).to be_success
   end
 
-  context 'when pass fails' do
-    let(:params) { { value: false } }
+  context "when pass fails" do
+    let(:params) { {value: false} }
 
     it 'invokes pass "one"' do
       expect(result[:one]).to be(false)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next pass exists' do
+  context "when next pass exists" do
     subject(:klass) do
       create_service do
         pass :one
@@ -54,12 +52,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:two]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step exists and pass fails' do
+  context "when next step exists and pass fails" do
     subject(:klass) do
       create_service do
         pass :one
@@ -75,18 +73,18 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'invokes step "two"' do
       expect(result[:two]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step exists and pass is fast: true' do
+  context "when next step exists and pass is fast: true" do
     subject(:klass) do
       create_service do
         pass :one, fast: true
@@ -106,12 +104,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:two]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step exists and pass is fast: :success' do
+  context "when next step exists and pass is fast: :success" do
     subject(:klass) do
       create_service do
         step :one, fast: :success
@@ -131,12 +129,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:two]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next failure exists and pass fails' do
+  context "when next failure exists and pass fails" do
     subject(:klass) do
       create_service do
         pass :one
@@ -152,18 +150,18 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke failure "two"' do
       expect(result[:two]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next failure exists and pass is fast: true' do
+  context "when next failure exists and pass is fast: true" do
     subject(:klass) do
       create_service do
         pass :one, fast: true
@@ -179,18 +177,18 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke failure "two"' do
       expect(result[:two]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next failure exists and pass is fast: :failure' do
+  context "when next failure exists and pass is fast: :failure" do
     subject(:klass) do
       create_service do
         pass :one, fast: :failure
@@ -206,18 +204,18 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke failure "two"' do
       expect(result[:two]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next failure exists and pass succeeds' do
+  context "when next failure exists and pass succeeds" do
     subject(:klass) do
       create_service do
         pass :one
@@ -237,12 +235,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:two]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step and failure exist' do
+  context "when next step and failure exist" do
     subject(:klass) do
       create_service do
         pass :one
@@ -267,12 +265,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:two]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when next step and failure exist and pass fails' do
+  context "when next step and failure exist and pass fails" do
     subject(:klass) do
       create_service do
         pass :one
@@ -293,7 +291,7 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'invokes step "two"' do
       expect(result[:two]).to be(true)
@@ -303,12 +301,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:three]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when pass has on_success' do
+  context "when pass has on_success" do
     subject(:klass) do
       create_service do
         pass :one, on_success: :three
@@ -337,12 +335,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:three]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when pass has on_success to failure' do
+  context "when pass has on_success to failure" do
     subject(:klass) do
       create_service do
         pass :one, on_success: :three
@@ -371,12 +369,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:three]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when pass has on_success to undefined step' do
+  context "when pass has on_success to undefined step" do
     subject(:klass) do
       create_service do
         step :one, on_success: :two
@@ -387,12 +385,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       end
     end
 
-    it 'raises StepIsNotImplementedError' do
+    it "raises StepIsNotImplementedError" do
       expect { result }.to raise_error(Yaso::StepIsNotImplementedError)
     end
   end
 
-  context 'when pass has on_failure' do
+  context "when pass has on_failure" do
     subject(:klass) do
       create_service do
         pass :one, on_failure: :three
@@ -413,7 +411,7 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "two"' do
       expect(result[:two]).to be_nil
@@ -423,12 +421,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:three]).to be(true)
     end
 
-    it 'fails' do
+    it "fails" do
       expect(result).to be_failure
     end
   end
 
-  context 'when pass has on_failure to step' do
+  context "when pass has on_failure to step" do
     subject(:klass) do
       create_service do
         pass :one, on_failure: :three
@@ -449,7 +447,7 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       end
     end
 
-    let(:params) { { value: false } }
+    let(:params) { {value: false} }
 
     it 'does not invoke step "two"' do
       expect(result[:two]).to be_nil
@@ -459,12 +457,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:three]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when pass has on_failure to undefined step' do
+  context "when pass has on_failure to undefined step" do
     subject(:klass) do
       create_service do
         pass :one, on_failure: :two
@@ -475,12 +473,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       end
     end
 
-    it 'raises StepIsNotImplementedError' do
+    it "raises StepIsNotImplementedError" do
       expect { result }.to raise_error(Yaso::StepIsNotImplementedError)
     end
   end
 
-  context 'when pass is inline' do
+  context "when pass is inline" do
     subject(:klass) do
       create_service do
         pass(:one) { |ctx, value:, **| ctx[:one] = value }
@@ -491,24 +489,24 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:one]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when pass is inline and block is not passed' do
+  context "when pass is inline and block is not passed" do
     subject(:klass) do
       create_service do
         pass(:one)
       end
     end
 
-    it 'raises StepIsNotImplementedError' do
+    it "raises StepIsNotImplementedError" do
       expect { result }.to raise_error(Yaso::StepIsNotImplementedError)
     end
   end
 
-  context 'when pass is a callable' do
+  context "when pass is a callable" do
     subject(:klass) do
       create_service do
         pass CallableClass
@@ -521,19 +519,19 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
           ctx[:one] = ctx[:value]
         end
       end
-      stub_const('CallableClass', constant)
+      stub_const("CallableClass", constant)
     end
 
-    it 'invokes constant' do
+    it "invokes constant" do
       expect(result[:one]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when pass is a callable and has a name' do
+  context "when pass is a callable and has a name" do
     subject(:klass) do
       create_service do
         step :one, on_failure: :three
@@ -556,10 +554,10 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
           ctx[:three] = true
         end
       end
-      stub_const('CallableClass', constant)
+      stub_const("CallableClass", constant)
     end
 
-    it 'invokes constant' do
+    it "invokes constant" do
       expect(result[:three]).to be(true)
     end
 
@@ -567,12 +565,12 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:two]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when pass is a Yaso::Service' do
+  context "when pass is a Yaso::Service" do
     subject(:klass) do
       create_service do
         pass YasoServiceClass
@@ -583,19 +581,19 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       constant = create_service do
         step(:one) { |ctx, value:, **| ctx[:one] = value }
       end
-      stub_const('YasoServiceClass', constant)
+      stub_const("YasoServiceClass", constant)
     end
 
-    it 'invokes constant' do
+    it "invokes constant" do
       expect(result[:one]).to be(true)
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end
 
-  context 'when pass is a Yaso::Service and has a name' do
+  context "when pass is a Yaso::Service and has a name" do
     subject(:klass) do
       create_service do
         step :one, on_failure: :three
@@ -616,10 +614,10 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       constant = create_service do
         step(:three) { |ctx, **| ctx[:three] = true }
       end
-      stub_const('YasoServiceClass', constant)
+      stub_const("YasoServiceClass", constant)
     end
 
-    it 'invokes constant' do
+    it "invokes constant" do
       expect(result[:three]).to be(true)
     end
 
@@ -627,7 +625,7 @@ RSpec.describe 'Pass', flow: :classic, type: :integration do
       expect(result[:two]).to be_nil
     end
 
-    it 'succeeds' do
+    it "succeeds" do
       expect(result).to be_success
     end
   end

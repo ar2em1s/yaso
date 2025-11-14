@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class DryTransactionStepsService
   include Dry::Transaction
 
@@ -100,14 +98,14 @@ end
 class DryTransactionCallablesService
   include Dry::Transaction(container: DryTransactionContainer)
 
-  step :one, with: :'callable.one'
-  step :two, with: :'callable.two'
-  step :three, with: :'callable.three'
-  step :four, with: :'callable.four'
-  step :five, with: :'callable.five'
-  step :six, with: :'callable.six'
-  step :seven, with: :'callable.seven'
-  step :eight, with: :'callable.eight'
-  step :nine, with: :'callable.nine'
-  step :ten, with: :'callable.ten'
+  step :one, with: :"callable.one"
+  step :two, with: :"callable.two"
+  step :three, with: :"callable.three"
+  step :four, with: :"callable.four"
+  step :five, with: :"callable.five"
+  step :six, with: :"callable.six"
+  step :seven, with: :"callable.seven"
+  step :eight, with: :"callable.eight"
+  step :nine, with: :"callable.nine"
+  step :ten, with: :"callable.ten"
 end
