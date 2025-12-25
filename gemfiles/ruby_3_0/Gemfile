@@ -1,6 +1,6 @@
 group :development, :test do
-  gem "standard", "~> 1.51.1"
-  gem "rubocop-rspec", "~> 3.7.0"
+  gem "standard", "~> 1.52.0"
+  gem "rubocop-rspec", "~> 3.8.0"
 end
 
 group :test do

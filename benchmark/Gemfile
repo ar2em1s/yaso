@@ -1,6 +1,10 @@
 source "https://rubygems.org"
 
-eval_gemfile "gemfiles/ruby_#{RUBY_VERSION[0]}/Gemfile"
+if File.exist?("gemfiles/ruby_#{RUBY_VERSION[0]}/Gemfile")
+  eval_gemfile "gemfiles/ruby_#{RUBY_VERSION[0]}/Gemfile"
+else
+  eval_gemfile "gemfiles/default/Gemfile"
+end
 
 gem "benchmark-ips", "~> 2.14.0"
 
